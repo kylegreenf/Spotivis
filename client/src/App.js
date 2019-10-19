@@ -79,7 +79,7 @@ class App extends Component {
   getAllSavedHelper(offset, tracks) {
     spotifyApi.getMySavedTracks({limit: 50, offset: offset})
       .then((response) => {
-        console.log(tracks);
+        //console.log(tracks);
         for (var i = 0; i < 50; i++) {
           if (response.items[i] != null) {
             tracks[offset+i] = i + ". " +response.items[i].track.name + '\n';
@@ -114,7 +114,6 @@ class App extends Component {
       this.getAllSavedHelper(offset, tracks);
       offset+= 50;
     }
-    //console.log(tracks);
 
   }
 
