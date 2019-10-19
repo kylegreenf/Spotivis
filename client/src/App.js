@@ -35,7 +35,7 @@ class App extends Component {
 
   getNowPlaying(){
     //To remove
-    this.getAllSaved();
+    this.getAllTheSaved();
 
     spotifyApi.getMyCurrentPlaybackState()
       .then((response) => {
@@ -58,13 +58,12 @@ class App extends Component {
   }
 
   getAllSaved() {
-    spotifyApi.getMySavedTracks()
+    spotifyApi.getMySavedTracks({limit: 50, offset: 10})
       .then((response) => {
         var tracks = [""];
         console.log(response);
         for (var i = 0; i < 20; i++) {
-          tracks += response.items[i].track.name;
-          tracks += '\n';
+          tracks[i] = response.items[i].track.name;
         }
         this.setState({
           multiTracks: {
@@ -77,6 +76,45 @@ class App extends Component {
       })
   }
 
+  getAllSavedHelper(offset) {
+    spotifyApi.getMySavedTracks({limit: 50, offset: offset})
+      .then((response) => {
+        //var tracks = this.state.multiTracks.tracks;
+        var tracks = [""];
+        console.log(response);
+        for (var i = 0; i < 50; i++) {
+          if (response.items[i] != null) {
+            tracks[offset+i] = i + ". " +response.items[i].track.name + '\n';
+          }
+        }
+        this.setState({
+          multiTracks: {
+            tracks: tracks
+          },
+        });
+      })
+  }
+
+  getAllTheSaved() {
+    spotifyApi.getMySavedTracks()
+      .then((response) => {
+        this.setState({
+          importantInfo: {
+            numSavedSongs: response.total
+          }
+        });
+      });
+
+    var totalSaved = this.state.importantInfo.numSavedSongs;
+    var minimumTotalCalls = Math.ceil(totalSaved / 50);
+    var offset = 0;
+
+    for (var i = 0; i < minimumTotalCalls; i++) {
+      this.getAllSavedHelper(offset);
+      offset+= 50;
+    }
+  }
+
 
   render() {
 
@@ -87,13 +125,13 @@ class App extends Component {
           Now Playing: { this.state.nowPlaying.name }
         </div>
         <div>
-          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
+          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }} alt = ""/>
         </div>
         <div>
         <div>
          You have saved: {this.state.importantInfo.numSavedSongs}
         </div>
-         More recently saved: {this.state.multiTracks.tracks} songs
+         More recently saved: {this.state.multiTracks.tracks}
         </div>
         { this.state.loggedIn &&
           <button onClick={() => this.getNowPlaying()}>
