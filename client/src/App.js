@@ -15,7 +15,7 @@ class App extends Component {
     this.state = {
       loggedIn: token ? true : false,
       nowPlaying: { name: 'Not Checked', albumArt: '' },
-      multiTracks: {tracks: [] },
+      multiTracks: {tracks: new Array() },
       importantInfo: {
         numSavedSongs: 0
       }
