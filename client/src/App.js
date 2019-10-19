@@ -15,8 +15,10 @@ class App extends Component {
     this.state = {
       loggedIn: token ? true : false,
       nowPlaying: { name: 'Not Checked', albumArt: '' },
-      trackInfo: { firstplaylistname: "saved" },
-      multiTracks: {tracks: [] }
+      multiTracks: {tracks: [] },
+      importantInfo: {
+        numSavedSongs: 0
+      }
     }
   }
   getHashParams() {
@@ -31,24 +33,8 @@ class App extends Component {
     return hashParams;
   }
 
-
-
-
-
-  getRecentSaved() {
-    spotifyApi.getMySavedTracks()
-      .then((response) => {
-                console.log(response);
-        this.setState({
-          trackInfo: {
-            firstplaylistname: response.items[0].track.name
-          }
-        });
-      })
-  }
   getNowPlaying(){
     //To remove
-    this.getRecentSaved();
     this.getAllSaved();
 
     spotifyApi.getMyCurrentPlaybackState()
@@ -83,6 +69,9 @@ class App extends Component {
         this.setState({
           multiTracks: {
             tracks: tracks
+          },
+          importantInfo: {
+            numSavedSongs: response.total
           }
         });
       })
@@ -101,10 +90,10 @@ class App extends Component {
           <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
         </div>
         <div>
-         Most recently saved: {this.state.trackInfo.firstplaylistname}
-        </div>
         <div>
-         More recently saved: {this.state.multiTracks.tracks}
+         You have saved: {this.state.importantInfo.numSavedSongs}
+        </div>
+         More recently saved: {this.state.multiTracks.tracks} songs
         </div>
         { this.state.loggedIn &&
           <button onClick={() => this.getNowPlaying()}>
