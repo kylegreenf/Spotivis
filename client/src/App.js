@@ -15,7 +15,8 @@ class App extends Component {
     this.state = {
       loggedIn: token ? true : false,
       nowPlaying: { name: 'Not Checked', albumArt: '' },
-      trackInfo: { firstplaylistname: "saved" }
+      trackInfo: { firstplaylistname: "saved" },
+      multiTracks: {tracks: [] }
     }
   }
   getHashParams() {
@@ -32,23 +33,12 @@ class App extends Component {
 
 
 
-  getNowPlaying(){
-    spotifyApi.getMyCurrentPlaybackState()
-      .then((response) => {
-        if (response.item.name != null) {
-          this.setState({
-            nowPlaying: {
-                name: response.item.name,
-                albumArt: response.item.album.images[0].url
-              }
-          });
-        }
-      })
-  }
+
 
   getRecentSaved() {
     spotifyApi.getMySavedTracks()
       .then((response) => {
+                console.log(response);
         this.setState({
           trackInfo: {
             firstplaylistname: response.items[0].track.name
@@ -56,10 +46,51 @@ class App extends Component {
         });
       })
   }
+  getNowPlaying(){
+    //To remove
+    this.getRecentSaved();
+    this.getAllSaved();
+
+    spotifyApi.getMyCurrentPlaybackState()
+      .then((response) => {
+        if (response.item != null) {
+          this.setState({
+            nowPlaying: {
+                name: response.item.name,
+                albumArt: response.item.album.images[0].url
+              }
+          });
+        }
+        else {
+          this.setState({
+            nowPlaying: {
+                name: "Nothing is playing currently"
+              }
+          });
+        }
+      })
+  }
+
+  getAllSaved() {
+    spotifyApi.getMySavedTracks()
+      .then((response) => {
+        var tracks = [""];
+        console.log(response);
+        for (var i = 0; i < 20; i++) {
+          tracks += response.items[i].track.name;
+          tracks += '\n';
+        }
+        this.setState({
+          multiTracks: {
+            tracks: tracks
+          }
+        });
+      })
+  }
 
 
   render() {
-    this.getRecentSaved()
+
     return (
       <div className="App">
         <a href='http://localhost:8888' > Login to Spotify </a>
@@ -67,10 +98,13 @@ class App extends Component {
           Now Playing: { this.state.nowPlaying.name }
         </div>
         <div>
+          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
+        </div>
+        <div>
          Most recently saved: {this.state.trackInfo.firstplaylistname}
         </div>
         <div>
-          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
+         More recently saved: {this.state.multiTracks.tracks}
         </div>
         { this.state.loggedIn &&
           <button onClick={() => this.getNowPlaying()}>
