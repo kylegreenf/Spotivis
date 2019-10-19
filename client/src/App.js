@@ -14,7 +14,8 @@ class App extends Component {
     }
     this.state = {
       loggedIn: token ? true : false,
-      nowPlaying: { name: 'Not Checked', albumArt: '' }
+      nowPlaying: { name: 'Not Checked', albumArt: '' },
+      trackInfo: { firstplaylistname: "saved" }
     }
   }
   getHashParams() {
@@ -29,23 +30,44 @@ class App extends Component {
     return hashParams;
   }
 
+
+
   getNowPlaying(){
     spotifyApi.getMyCurrentPlaybackState()
       .then((response) => {
+        if (response.item.name != null) {
+          this.setState({
+            nowPlaying: {
+                name: response.item.name,
+                albumArt: response.item.album.images[0].url
+              }
+          });
+        }
+      })
+  }
+
+  getRecentSaved() {
+    spotifyApi.getMySavedTracks()
+      .then((response) => {
         this.setState({
-          nowPlaying: { 
-              name: response.item.name, 
-              albumArt: response.item.album.images[0].url
-            }
+          trackInfo: {
+            firstplaylistname: response.items[0].track.name
+          }
         });
       })
   }
+
+
   render() {
+    this.getRecentSaved()
     return (
       <div className="App">
         <a href='http://localhost:8888' > Login to Spotify </a>
         <div>
           Now Playing: { this.state.nowPlaying.name }
+        </div>
+        <div>
+         Most recently saved: {this.state.trackInfo.firstplaylistname}
         </div>
         <div>
           <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
