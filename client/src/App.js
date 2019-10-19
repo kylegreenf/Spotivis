@@ -15,7 +15,7 @@ class App extends Component {
     this.state = {
       loggedIn: token ? true : false,
       nowPlaying: { name: 'Not Checked', albumArt: '' },
-      multiTracks: {tracks: new Array() },
+      multiTracks: {tracks: [] },
       importantInfo: {
         numSavedSongs: 0
       }
@@ -79,10 +79,9 @@ class App extends Component {
   getAllSavedHelper(offset, tracks) {
     spotifyApi.getMySavedTracks({limit: 50, offset: offset})
       .then((response) => {
-        //console.log(tracks);
         for (var i = 0; i < 50; i++) {
           if (response.items[i] != null) {
-            tracks[offset+i] = i + ". " +response.items[i].track.name + '\n';
+            tracks[offset+i] = response.items[i].track;
           }
         }
         this.setState({
@@ -95,7 +94,6 @@ class App extends Component {
   }
 
   getAllTheSaved() {
-
     spotifyApi.getMySavedTracks()
       .then((response) => {
         this.setState({
@@ -117,6 +115,19 @@ class App extends Component {
 
   }
 
+//This can do a maximum of 100 songs per call.
+//This function needs to be modified to not have parameters. Just for testing, currently.
+  getAudioFeatures(songid1, songid2) {
+    spotifyApi.getAudioFeaturesForTracks([songid1, songid2])
+      .then((response) => {
+        console.log(response);
+      });
+  }
+
+  analyzeFirstSong() {
+    this.getAudioFeatures(this.state.multiTracks.tracks[1].id, this.state.multiTracks.tracks[1].id);
+  }
+
 
   render() {
 
@@ -133,11 +144,15 @@ class App extends Component {
         <div>
          You have saved: {this.state.importantInfo.numSavedSongs}
         </div>
-         More recently saved: {this.state.multiTracks.tracks}
         </div>
         { this.state.loggedIn &&
           <button onClick={() => this.getNowPlaying()}>
             Check Now Playing
+          </button>
+        }
+        { this.state.loggedIn &&
+          <button onClick={() => this.analyzeFirstSong()}>
+            Analyze after check
           </button>
         }
       </div>
