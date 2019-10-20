@@ -103,15 +103,23 @@ class App extends Component {
 // 100 tracks sent by getAudioFeatures()
   getAudioFeaturesHelper(tracksToSearch) {
     var trackIds = [];
-    console.log(tracksToSearch[0].id);
+    //console.log(tracksToSearch[0].id);
     for (var i = 0; i < 100; i++) {
       trackIds[i] = tracksToSearch[i].id;
     }
 
     spotifyApi.getAudioFeaturesForTracks(trackIds)
       .then((response) => {
-        console.log(response);
+        //console.log(response);
+        for (var i = 0; i < 100; i++) {
+          //console.log(Object.assign(tracksToSearch[i], response[i]));
+          //console.log(tracksToSearch[i]);
+          tracksToSearch[i] = Object.assign(tracksToSearch[i], response.audio_features[i]);
+        }
       });
+      //console.log(tracksToSearch);
+      console.log(this.state.multiTracks.tracks)
+
   }
 
 // Slices tracks saved and calculates features (danceability for ex)
