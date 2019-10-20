@@ -64,6 +64,7 @@ class App extends Component {
         for (var i = 0; i < 50; i++) {
           if (response.items[i] != null) {
             tracks[offset+i] = response.items[i].track;
+            tracks[offset+i].recently_added = i+offset;
           }
         }
         this.setState({
