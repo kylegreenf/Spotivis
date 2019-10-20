@@ -135,6 +135,11 @@ class App extends Component {
     console.log(this.state.multiTracks);
   }
 
+  sortMostDanceable() {
+    var tracks = this.state.multiTracks.tracks;
+    console.log(tracks.sort((a, b) => (a.danceability > b.danceability) ? 1 : -1));
+  }
+
 
   render() {
 
@@ -160,6 +165,11 @@ class App extends Component {
         { this.state.loggedIn &&
           <button onClick={() => this.getAudioFeatures()}>
             Analyze after check
+          </button>
+        }
+        { this.state.loggedIn &&
+          <button onClick={() => this.sortMostDanceable()}>
+            Find Most Popular
           </button>
         }
       </div>
