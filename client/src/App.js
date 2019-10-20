@@ -18,7 +18,11 @@ class App extends Component {
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
       importantInfo: { //Important information to be used by our app
         numSavedSongs: 0, //Count of songs saved by a user
-      }
+      },
+      mostDanceableSong: {
+        name: 'Not Checked',
+        albumArt: ''
+      },
     }
   }
   getHashParams() {
@@ -137,7 +141,15 @@ class App extends Component {
 
   sortMostDanceable() {
     var tracks = this.state.multiTracks.tracks;
-    console.log(tracks.sort((a, b) => (a.danceability > b.danceability) ? 1 : -1));
+    tracks.sort((a, b) => (a.danceability > b.danceability) ? 1 : -1);
+
+    this.setState({
+      mostDanceableSong: {
+          name: tracks[this.state.importantInfo.numSavedSongs-1].name,
+          albumArt: tracks[this.state.importantInfo.numSavedSongs-1].album.images[0].url,
+        }
+    });
+    console.log(this.state.mostDanceableSong.albumArt);
   }
 
 
@@ -169,9 +181,16 @@ class App extends Component {
         }
         { this.state.loggedIn &&
           <button onClick={() => this.sortMostDanceable()}>
-            Find Most Popular
+            Find Most Danceable
           </button>
         }
+        <div>
+         Your most danceable song: {this.state.mostDanceableSong.name}
+        </div>
+        <div>
+          <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
+        </div>
+
       </div>
     );
   }
