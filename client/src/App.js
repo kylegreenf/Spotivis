@@ -13,11 +13,11 @@ class App extends Component {
       spotifyApi.setAccessToken(token);
     }
     this.state = {
-      loggedIn: token ? true : false,
-      nowPlaying: { name: 'Not Checked', albumArt: '' },
-      multiTracks: {tracks: [] },
-      importantInfo: {
-        numSavedSongs: 0
+      loggedIn: token ? true : false, // True if user is logged in
+      nowPlaying: { name: 'Not Checked', albumArt: '' }, // Name of current song + picture
+      multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
+      importantInfo: { //Important information to be used by our app
+        numSavedSongs: 0, //Count of songs saved by a user
       }
     }
   }
@@ -35,7 +35,7 @@ class App extends Component {
 
   getNowPlaying(){
     //To remove
-    this.getAllTheSaved();
+    this.getAllSavedTracks();
 
     spotifyApi.getMyCurrentPlaybackState()
       .then((response) => {
@@ -57,25 +57,7 @@ class App extends Component {
       })
   }
 
-  getAllSaved() {
-    spotifyApi.getMySavedTracks({limit: 50, offset: 10})
-      .then((response) => {
-        var tracks = [""];
-        console.log(response);
-        for (var i = 0; i < 20; i++) {
-          tracks[i] = response.items[i].track.name;
-        }
-        this.setState({
-          multiTracks: {
-            tracks: tracks
-          },
-          importantInfo: {
-            numSavedSongs: response.total
-          }
-        });
-      })
-  }
-
+// Helps getAllSavedTracks info for 50 songs sent with offset
   getAllSavedHelper(offset, tracks) {
     spotifyApi.getMySavedTracks({limit: 50, offset: offset})
       .then((response) => {
@@ -93,7 +75,8 @@ class App extends Component {
       })
   }
 
-  getAllTheSaved() {
+// Finds every track a user has saved
+  getAllSavedTracks() {
     spotifyApi.getMySavedTracks()
       .then((response) => {
         this.setState({
@@ -115,17 +98,26 @@ class App extends Component {
 
   }
 
-//This can do a maximum of 100 songs per call.
-//This function needs to be modified to not have parameters. Just for testing, currently.
-  getAudioFeatures(songid1, songid2) {
-    spotifyApi.getAudioFeaturesForTracks([songid1, songid2])
+// Input: array of track objects. Can do a maximum of 100 songs per call.
+// Finds features (danceability/tempo/etc) of song.
+// 100 tracks sent by getAudioFeatures()
+  getAudioFeaturesHelper(tracksToSearch) {
+    var trackIds = [];
+    console.log(tracksToSearch[0].id);
+    for (var i = 0; i < 100; i++) {
+      trackIds[i] = tracksToSearch[i].id;
+    }
+
+    spotifyApi.getAudioFeaturesForTracks(trackIds)
       .then((response) => {
         console.log(response);
       });
   }
 
-  analyzeFirstSong() {
-    this.getAudioFeatures(this.state.multiTracks.tracks[1].id, this.state.multiTracks.tracks[1].id);
+// Slices tracks saved and calculates features (danceability for ex)
+// in increments of 100 songs at a time.
+  getAudioFeatures() {
+    this.getAudioFeatures(this.state.multiTracks.tracks.slice(0,100));
   }
 
 
