@@ -117,7 +117,8 @@ class App extends Component {
 // Slices tracks saved and calculates features (danceability for ex)
 // in increments of 100 songs at a time.
   getAudioFeatures() {
-    this.getAudioFeatures(this.state.multiTracks.tracks.slice(0,100));
+    //console.log(this.state.multiTracks.tracks[0]);
+    this.getAudioFeaturesHelper(this.state.multiTracks.tracks.slice(0,100));
   }
 
 
@@ -143,7 +144,7 @@ class App extends Component {
           </button>
         }
         { this.state.loggedIn &&
-          <button onClick={() => this.analyzeFirstSong()}>
+          <button onClick={() => this.getAudioFeatures()}>
             Analyze after check
           </button>
         }
