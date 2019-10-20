@@ -114,8 +114,8 @@ class App extends Component {
     spotifyApi.getAudioFeaturesForTracks(trackIds)
       .then((response) => {
         for (var i = 0; i < 100; i++) {
-          if (tracksToSearch[i*100] != null) {
-            tracksToSearch[i] = Object.assign(tracksToSearch[i*100], response.audio_features[i]);
+          if (tracksToSearch[i] != null) {
+            this.state.multiTracks.tracks[ihundreds*100 + i] = Object.assign(tracksToSearch[i], response.audio_features[i]);
           }
         }
       });
@@ -131,6 +131,7 @@ class App extends Component {
     for (var i = 0; i < minimumTotalCalls; i++) {
       this.getAudioFeaturesHelper(this.state.multiTracks.tracks.slice(i*100,(i+1)*100), i);
     }
+    console.log(this.state.multiTracks);
   }
 
 
