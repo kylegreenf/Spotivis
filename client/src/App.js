@@ -3,6 +3,7 @@ import './App.css';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
+var Chart = require('chart.js');
 
 class App extends Component {
   constructor(){
@@ -38,6 +39,9 @@ class App extends Component {
   }
 
   getNowPlaying(){
+    this.donutChart()
+    this.barChart()
+
     //To remove
     this.getAllSavedTracks();
 
@@ -142,16 +146,78 @@ class App extends Component {
   sortMostDanceable() {
     var tracks = this.state.multiTracks.tracks;
     tracks.sort((a, b) => (a.danceability > b.danceability) ? 1 : -1);
-
     this.setState({
       mostDanceableSong: {
-          name: tracks[this.state.importantInfo.numSavedSongs-1].name,
+          name: tracks[tracks.length-1].name,
           albumArt: tracks[this.state.importantInfo.numSavedSongs-1].album.images[0].url,
         }
     });
     console.log(this.state.mostDanceableSong.albumArt);
   }
 
+ barChart(dataArr, LabelsArr) {
+    var ctx = 'genreChart';
+
+    var dataArr = [4, 12, 554, 2, 12]
+    var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"]
+    var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
+    var options = {
+        title: {
+            display: true,
+            text: 'My big ol bar chart'
+        },
+        legend: { display: false },
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    offsetGridLines: true
+                }
+            }]
+        }
+    };
+
+
+    var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+
+    labels: labelsArr,
+    datasets: [{
+        backgroundColor: colorsArr,
+        data: dataArr
+    }]
+    },
+    options: options
+    });
+ }
+
+donutChart(dataArr, LabelsArr) {
+var ctx = 'donut-chart';
+
+    var dataArr = [30, 10, 30, 15, 20]
+    var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"]
+    var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#c45850"]
+    var options = {
+        title: {
+            display: true,
+            text: 'My big ol donut chart'
+        },
+    };
+
+
+    var myBarChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+
+    labels: labelsArr,
+    datasets: [{
+        backgroundColor: colorsArr,
+        data: dataArr
+    }]
+    },
+    options: options
+    });
+ }
 
   render() {
 
@@ -190,7 +256,11 @@ class App extends Component {
         <div>
           <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
         </div>
+        <div class="Chart-container">     
+            <canvas id="donut-chart" width="2" height="1"></canvas>   
+            <canvas id="genreChart" width="400" height="200"></canvas>
 
+        </div>
       </div>
     );
   }
