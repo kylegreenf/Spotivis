@@ -130,42 +130,6 @@ class App extends Component {
 
   }
 
-// Input: array of track objects. Can do a maximum of 100 songs per call.
-// Finds features (danceability/tempo/etc) of song.
-// 100 tracks sent by getAudioFeatures()
-  getAudioFeaturesHelper(tracksToSearch, ihundreds) {
-    var trackIds = [];
-    // Find every track ID to search from the track object's id variable
-    for (var i = 0; i < 100; i++) {
-      if (tracksToSearch[i] != null) {
-        trackIds[i] = tracksToSearch[i].id;
-      }
-    }
-
-    // Find the Audio Features for each track, then merge with existing track object
-    spotifyApi.getAudioFeaturesForTracks(trackIds)
-      .then((response) => {
-        for (var i = 0; i < 100; i++) {
-          if (tracksToSearch[i] != null) {
-            this.state.multiTracks.tracks[ihundreds*100 + i] = Object.assign(tracksToSearch[i], response.audio_features[i]);
-          }
-        }
-
-      });
-
-  }
-
-// Slices tracks saved and calculates features (danceability for ex)
-// in increments of 100 songs at a time.
-  getAudioFeatures() {
-    var totalSaved = this.state.importantInfo.numSavedSongs;
-    var minimumTotalCalls = Math.ceil(totalSaved / 100);
-
-    for (var i = 0; i < minimumTotalCalls; i++) {
-      this.getAudioFeaturesHelper(this.state.multiTracks.tracks.slice(i*100,(i+1)*100), i);
-    }
-    console.log(this.state.multiTracks);
-  }
 
   sortMostDanceable() {
     var tracks = this.state.multiTracks.tracks;

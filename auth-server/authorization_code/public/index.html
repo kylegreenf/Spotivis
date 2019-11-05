@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Example of the Authorization Code flow with Spotify</title>
+    <title>Spotivis - Data Visualization</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
       #login, #loggedin {
@@ -13,15 +13,47 @@
         white-space: nowrap;
         width: 500px;
       }
+      .loginbutton {
+        margin-top: 20px;
+        line-height: 60px;
+        font-weight: bold;
+        padding: 0 35px;
+        background: #1DB954;
+        color: white;
+        border: none;
+        border-radius: 1600px;
+        text-shadow: -.2px .3px #000000;
+      }
+      .mainmenu {
+        text-align: center;
+      }
+      .topline{
+        display: block;
+        margin-before: 0.5em;
+        margin-after: 0.5em;
+        margin-start: auto;
+        margin-end: auto;
+        overflow: hidden;
+        border-style: inset;
+        border-width: 1px;
+        width: 100%;
+      }
     </style>
   </head>
 
   <body>
     <div class="container">
-      <div id="login">
-        <h1>This is an example of the Authorization Code flow</h1>
-        <a href="/login" class="btn btn-primary">Log in with Spotify</a>
+      <div class = "logo">
+        <h2>Spotivis (0)</h2>
       </div>
+      <div id="login" class = "mainmenu">
+        <hr class = "topline">
+        <h1>Welcome to Spotivis!</h1>
+        <h3>Here you can see statistics, charts, and graphs on all of your Spotify listening history!</h3>
+        <a href="/login" class="btn btn-primary loginbutton">Log in with Spotify</a>
+        <h3>Just as a reminder, we never store your data and only present to you data Spotify has made avaliable.</h3>
+      </div>
+      <div class="line"></div>
       <div id="loggedin">
         <div id="user-profile">
         </div>
