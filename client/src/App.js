@@ -40,9 +40,6 @@ class App extends Component {
   }
 
   getNowPlaying(){
-    this.donutChart()
-    this.barChart()
-
     //To remove
     this.getAllSavedTracks();
 
@@ -248,6 +245,8 @@ class App extends Component {
 
   componentDidMount() {
     this.getNowPlaying();
+    this.donutChart();
+    this.barChart();
   }
 
   render() {
