@@ -266,15 +266,10 @@ class App extends Component {
               <h1>Content</h1>
             </div>
           </div>
-          
+
         </div>
 
 
-
-        
-        
-
-        
       </div>
     );
   }
