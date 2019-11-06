@@ -11,7 +11,7 @@
 }
 
 .top-bar, .top-bar *{
-    background-color: #1DB954;;
+    background-color: #1DB954;
     color: white;
     font-size: 125%;
 }
@@ -43,7 +43,7 @@
 }
 
 .dropdown *{
-    box-shadow:  1px 3px 2px 5px white;
+    border: 1px solid #555;
     padding: 2px, 0px, 2px;
     background-color: #1DB954;
 
