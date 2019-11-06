@@ -187,14 +187,21 @@ class App extends Component {
   donutChart(dataArr, labelsArr, colorsArr, title) {
     var tracks = this.state.multiTracks.tracks;
     var ctx = 'donut-chart';
+
         var options = {
+            elements: {
+                arc: {
+                    borderWidth: 1,
+                    }
+            },
             title: {
                 display: true,
                 text: title
             },
             legend:{
                 display:false            
-            }
+            },
+
         };
 
 
