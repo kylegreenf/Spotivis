@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+
 import './App.css';
+import './foundation.css';
+import './spotistyle.css';
+import TopBar from './TopBar';
+import SideNav from './SideNav';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -218,29 +223,58 @@ class App extends Component {
 
     return (
       <div className="App">
-        <a href='http://localhost:8888' > Login to Spotify </a>
-        <div>
-          Now Playing: { this.state.nowPlaying.name }
-        </div>
-        <div>
-          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }} alt = ""/>
-        </div>
-        <div>
-        <div>
-         You have saved: {this.state.importantInfo.numSavedSongs}
-        </div>
-        </div>
-        <div>
-         Your most danceable song: {this.state.mostDanceableSong.name}
-        </div>
-        <div>
-          <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
-        </div>
-        <div class="Chart-container">
-            <canvas id="donut-chart" width="2" height="1"></canvas>
-            <canvas id="genreChart" width="400" height="200"></canvas>
 
+        <TopBar />
+        <div className="Below">
+          <div className="SideNav-Wrapper">
+            <SideNav />
+          </div>
+          <div className="Content">
+            <a href='http://localhost:8888' > Login to Spotify </a>
+            <div>
+              Now Playing: { this.state.nowPlaying.name }
+            </div>
+            <div>
+              <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }} alt = ""/>
+            </div>
+            <div>
+            <div>
+              You have saved: {this.state.importantInfo.numSavedSongs}
+            </div>
+            </div>
+            <div>
+              Your most danceable song: {this.state.mostDanceableSong.name}
+            </div>
+            <div>
+              <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
+            </div>
+            <div className="Chart-container">
+                <canvas id="donut-chart" width="2" height="1"></canvas>
+                <canvas id="genreChart" width="400" height="200"></canvas>
+            </div>
+            <div>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+              <h1>Content</h1>
+            </div>
+          </div>
+          
         </div>
+
+
+
+        
+        
+
+        
       </div>
     );
   }

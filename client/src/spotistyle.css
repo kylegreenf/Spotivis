@@ -1,0 +1,56 @@
+
+
+
+
+
+.top-bar-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.top-bar, .top-bar *{
+    background-color: black;
+    color: white;
+    font-size: 125%;
+}
+
+.Below{
+    margin-top: 70px;
+}
+
+
+.sidenav{
+    height: 100%;
+    width: 20%;
+    background-color: rgb(238, 245, 255);
+    position: fixed;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 150px;
+}
+    
+
+
+.sidenav *{
+    padding: 15px;
+    font-size: 115%;
+    display: block;
+
+    
+}
+
+.Content {
+
+    background-color: rgb(253, 208, 208);
+    margin-left: 20%;
+    padding-top: 20%;
+}
+
+.Content > div {
+    padding-bottom: 50px;
+}
+
