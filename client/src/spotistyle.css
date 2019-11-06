@@ -11,7 +11,7 @@
 }
 
 .top-bar, .top-bar *{
-    background-color: black;
+    background-color: #1DB954;
     color: white;
     font-size: 125%;
 }
@@ -24,28 +24,34 @@
 .sidenav{
     height: 100%;
     width: 20%;
-    background-color: rgb(238, 245, 255);
+    background-color: rgb(0, 0, 0);
     position: fixed;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding-bottom: 150px;
 }
-    
+
 
 
 .sidenav *{
     padding: 15px;
     font-size: 115%;
     display: block;
+    color: white;
 
-    
+}
+
+.dropdown *{
+    border: 1px solid #555;
+    padding: 2px, 0px, 2px;
+    background-color: #1DB954;
+
 }
 
 .Content {
 
-    background-color: rgb(253, 208, 208);
+    background-color: white;
     margin-left: 20%;
     padding-top: 20%;
 }
@@ -53,4 +59,3 @@
 .Content > div {
     padding-bottom: 50px;
 }
-

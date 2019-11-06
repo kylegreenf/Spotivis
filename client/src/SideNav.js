@@ -5,13 +5,22 @@ import './spotistyle.css'
 function SideNav() {
     return(
         <div className="sidenav">
-            <div className="nav-wrapper">
-                <a href="#">Nav1</a>
-                <a href="#">Nav2</a>
-                <a href="#">Nav3</a>
-                <a href="#">Nav4</a>
-                <a href="#">Nav5</a>
-                <a href="#">Nav6</a>
+            <div class="nav-wrapper">
+              <div class="dropdown">
+                <a href="#">Top 5</a>
+              </div>
+              <div class="dropdown">
+                <a href="#">Totals</a>
+              </div>
+              <div class="dropdown">
+                <a href="#">Genre Breakdown</a>
+              </div>
+              <div class="dropdown">
+                <a href="#">Hipster Rating</a>
+              </div>
+              <div class="dropdown">
+                <a href="#">Averages</a>
+              </div>
             </div>
         </div>
     )
