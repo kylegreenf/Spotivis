@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import splitByValence from './statsHelper';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -93,9 +94,9 @@ class App extends Component {
                 tracks: tracks
               },
             });
-
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
-                      this.sortMostDanceable();
+                    this.drawCharts();                      
+                    this.sortMostDanceable();
             }
           });
 
@@ -179,17 +180,17 @@ class App extends Component {
     });
  }
 
-  donutChart(dataArr, LabelsArr) {
+  donutChart(dataArr, labelsArr, colorsArr, title) {
+    var tracks = this.state.multiTracks.tracks;
     var ctx = 'donut-chart';
-
-        var dataArr = [30, 10, 30, 15, 20]
-        var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"]
-        var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#c45850"]
         var options = {
             title: {
                 display: true,
-                text: 'My big ol donut chart'
+                text: title
             },
+            legend:{
+                display:false            
+            }
         };
 
 
@@ -207,10 +208,50 @@ class App extends Component {
         });
    }
 
+  drawCharts(){
+    var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
+    var valenceData = this.getBucketCount(valenceCounts);
+    var valenceLabels = this.getBucketLabel(valenceCounts);
+    var colors = ["#000000", "#1A1A1A","#333333","#4D4D4D","#696969","#808080","#999999","#B0B0B0","#C9C9C9","#E3E3E3","#FFFFFF"]
+    var title = 'Valence break down of your saved songs'    
+    this.donutChart(valenceData,valenceLabels, colors,title);
+    this.barChart();
+  }
+
   componentDidMount() {
     this.getNowPlaying();
-    this.donutChart();
-    this.barChart();
+  }
+  
+  getBucketCount(dict){
+    var valArr = [];
+    for (var key in dict){
+        valArr.push(dict[key])
+    }      
+    return valArr;
+  }
+
+  getBucketLabel(dict){
+    var valArr = [];
+    for (var key in dict){
+        valArr.push(key.toString() + "-" +(parseInt(key)+10))
+    }      
+    return valArr;
+  }
+
+  splitByValence(tracks){
+    var totalLen = tracks.length
+    var countDict = {}
+    for (var i in tracks){
+        var val = tracks[i].valence
+        val = (Math.floor(val*10))*10
+
+        if(val in countDict){
+            countDict[val] += 1        
+        }else{
+            countDict[val] = 1
+        }
+    }
+    return countDict
   }
 
   render() {
