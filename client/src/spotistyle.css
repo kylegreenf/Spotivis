@@ -5,7 +5,7 @@
 }
 
 * {
-  font-family: Montserrat;
+  font-family: Helvetica;
 }
 
 
@@ -17,7 +17,7 @@
 }
 
 .top-bar, .top-bar *{
-    background-color: #1DB954;
+    background-color: #764abc;
     color: white;
     font-size: 125%;
 }
@@ -30,7 +30,7 @@
 .sidenav{
     height: 100%;
     width: 20%;
-    background-color: rgb(0, 0, 0);
+    background-color: #23282d;
     position: fixed;
     display: flex;
     flex-direction: column;
