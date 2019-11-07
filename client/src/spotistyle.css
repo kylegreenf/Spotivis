@@ -1,6 +1,12 @@
 
+@font-face {
+  font-family: Montserrat;
+  src: url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+}
 
-
+* {
+  font-family: Montserrat;
+}
 
 
 .top-bar-container {
@@ -34,19 +40,27 @@
 
 
 
-.sidenav *{
-    padding: 15px;
+.sidenav {
+    padding: 3px;
     font-size: 115%;
     display: block;
     color: white;
-
+    text-align: left;
+    text-indent: 35px;
 }
 
 .dropdown *{
-    border: 1px solid #555;
-    padding: 2px, 0px, 2px;
-    background-color: #1DB954;
+    padding: 1px, 0px, 1px;
+    color: white;
+}
 
+.dropdownselection {
+    text-indent: 55px;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .Content {
