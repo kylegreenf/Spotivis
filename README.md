@@ -9,7 +9,7 @@ Spotify Habit Visualization
 - Navigate to the auth-server directory `cd auth-server`
 - Install the dependencies `npm install`
 - Paste in the redirect uri, client id, and client secret you copied in step 1
-- Run the Server `node authorization_code/app.js`
+- Run the Server `node app.js`
 
 ### 3)  Start Client
 - Navigate to the auth-server directory `cd client`
