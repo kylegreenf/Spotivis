@@ -29,7 +29,7 @@
 
 .sidenav{
     height: 100%;
-    width: 20%;
+    width: 275px;
     background-color: #23282d;
     position: fixed;
     display: flex;
@@ -41,8 +41,6 @@
     text-align: left;
     text-indent: 35px;
 }
-
-
 
 .dropdown *{
     color: white;

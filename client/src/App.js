@@ -45,12 +45,11 @@ class App extends Component {
   }
 
   getNowPlaying(){
+    this.getAllSavedTracks();
     this.donutChart()
     this.barChart()
 
-    //To remove
-    this.getAllSavedTracks();
-
+    /*
     spotifyApi.getMyCurrentPlaybackState()
       .then((response) => {
         if (response.item != null) {
@@ -68,7 +67,7 @@ class App extends Component {
               }
           });
         }
-      })
+      })*/
   }
 
 // Helps getAllSavedTracks info for 50 songs sent with offset
