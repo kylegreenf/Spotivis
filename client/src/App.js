@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import './foundation.css';
 import './spotistyle.css';
+
 import TopBar from './TopBar';
 import SideNav from './SideNav';
 
@@ -30,6 +31,7 @@ class App extends Component {
         name: 'Not Checked',
         albumArt: ''
       },
+      loaded: false,
     }
   }
   getHashParams() {
@@ -102,7 +104,9 @@ class App extends Component {
             });
 
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
-                      this.sortMostDanceable();
+              this.sortMostDanceable();
+              //remove loading loading screen
+
             }
           });
 
@@ -147,6 +151,9 @@ class App extends Component {
           albumArt: tracks[this.state.importantInfo.numSavedSongs-1].album.images[0].url,
         }
     });
+    this.setState({
+      loaded: true,
+    })
   }
 
 
@@ -219,9 +226,15 @@ class App extends Component {
   }
 
   render() {
-
+    let {loaded} = this.state;
     return (
       <div className="App">
+        {loaded ?
+          ("") :
+          (<div class = "loadingscreen">
+            LOADING!
+          </div>
+          )}
 
         <TopBar />
         <div className="Below">
@@ -251,6 +264,7 @@ class App extends Component {
                 <canvas id="donut-chart" width="2" height="1"></canvas>
                 <canvas id="genreChart" width="400" height="200"></canvas>
             </div>
+
             <div>
               <h1>Content</h1>
               <h1>Content</h1>
