@@ -232,12 +232,20 @@ class App extends Component {
         {loaded ?
           ("") :
           (<div class = "loadingscreen">
-            LOADING!
+            <h1>Loading</h1>
+            <h2>Please bear with us while we analyze your listening history</h2>
+            <h3>This should take no longer than 30 seconds.</h3>
+            <br/>
+            <div class="item">
+				        <div class="loader09">
+                </div>
+			      </div>
           </div>
           )}
 
-        <TopBar />
+
         <div className="Below">
+                <TopBar />
           <div className="SideNav-Wrapper">
             <SideNav />
           </div>
