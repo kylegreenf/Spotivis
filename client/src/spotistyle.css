@@ -48,21 +48,7 @@
     flex-direction: column;
     justify-content: center;
 }
-/*
-.dropdownselection:hover *{
-  background-color: #764abc;
-  color: white;
-  border-style: solid;
-  border-width: 2px;
-}
 
-.dropdowncategory:hover *{
-  background-color: #764abc;
-  color: white;
-  border-style: solid;
-  border-width: 2px;
-}
-*/
 .dropdownhighlight:hover > a{
   background-color: #764abc;
   color: white;
@@ -80,10 +66,9 @@
 }
 
 .Content {
-
     background-color: white;
-    margin-left: 20%;
-    padding-top: 20%;
+    padding-left: 300px;
+    padding-top: 5%;
 }
 
 .Content > div {

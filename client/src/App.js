@@ -21,7 +21,6 @@ class App extends Component {
     }
     this.state = {
       loggedIn: token ? true : false, // True if user is logged in
-      nowPlaying: { name: 'Not Checked', albumArt: '' }, // Name of current song + picture
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
       importantInfo: { //Important information to be used by our app
         numSavedSongs: 0, //Count of songs saved by a user
@@ -253,17 +252,9 @@ class App extends Component {
             <SideNav />
           </div>
           <div className="Content">
-            <a href='http://localhost:8888' > Login to Spotify </a>
-            <div>
-              Now Playing: { this.state.nowPlaying.name }
-            </div>
-            <div>
-              <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }} alt = ""/>
-            </div>
-            <div>
+            <a href='http://localhost:8888' > Return to Login page </a>
             <div>
               You have saved: {this.state.importantInfo.numSavedSongs}
-            </div>
             </div>
             <div>
               Your most danceable song: {this.state.mostDanceableSong.name}
@@ -275,7 +266,6 @@ class App extends Component {
                 <canvas id="donut-chart" width="2" height="1"></canvas>
                 <canvas id="genreChart" width="400" height="200"></canvas>
             </div>
-
             <div>
               <h1>Content</h1>
               <h1>Content</h1>
