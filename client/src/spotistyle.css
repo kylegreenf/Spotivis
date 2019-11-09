@@ -44,8 +44,11 @@
 
 .dropdown *{
     color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-
+/*
 .dropdownselection:hover *{
   background-color: #764abc;
   color: white;
@@ -54,6 +57,13 @@
 }
 
 .dropdowncategory:hover *{
+  background-color: #764abc;
+  color: white;
+  border-style: solid;
+  border-width: 2px;
+}
+*/
+.dropdownhighlight:hover > a{
   background-color: #764abc;
   color: white;
   border-style: solid;

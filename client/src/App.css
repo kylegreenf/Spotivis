@@ -53,7 +53,7 @@ div, button {
 .loader09 {
   width: 10px;
   height: 48px;
-  background: #0052ec;
+  background: #764abc;
   position: relative;
   animation: loader09-u3e967ec0 1s ease-in-out infinite;
   animation-delay: 0.4s;
@@ -64,7 +64,7 @@ div, button {
     position: absolute;
     width: 10px;
     height: 48px;
-    background: #0052ec;
+    background: #764abc;
     animation: loader09-u3e967ec0 1s ease-in-out infinite; }
   .loader09::before {
     right: 18px;
@@ -75,6 +75,6 @@ div, button {
 
 @keyframes loader09-u3e967ec0 {
   0%, 100% {
-    box-shadow: 0 0 0 #0052ec, 0 0 0 #0052ec; }
+    box-shadow: 0 0 0 #764abc, 0 0 0 #764abc; }
   50% {
-    box-shadow: 0 -8px 0 #0052ec, 0 8px 0 #0052ec; } }
+    box-shadow: 0 -8px 0 #764abc, 0 8px 0 #764abc; } }

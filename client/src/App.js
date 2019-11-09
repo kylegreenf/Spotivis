@@ -222,6 +222,9 @@ class App extends Component {
    }
 
   componentDidMount() {
+    if (this.state.loggedIn === false) {
+      window.location.replace("http://localhost:8888/");
+    }
     this.getNowPlaying();
   }
 
