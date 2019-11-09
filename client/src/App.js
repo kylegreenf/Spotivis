@@ -247,7 +247,7 @@ class App extends Component {
 
 
         <div className="Below">
-                <TopBar />
+          <TopBar />
           <div className="SideNav-Wrapper">
             <SideNav />
           </div>

@@ -74,3 +74,9 @@
 .Content > div {
     padding-bottom: 50px;
 }
+
+.logoimg{
+  background-color: white;
+  -webkit-mask: url(./spotivis-logo-text.svg) no-repeat center;
+  mask: url(./spotivis-logo-text.svg) no-repeat center;
+}

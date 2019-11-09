@@ -8,7 +8,7 @@ function TopBar() {
             <div className="sticky sticy-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
                 <div className="top-bar">
                     <ul className="menu" data-dropdown-menu>
-                        <li className="menu-text">Spotivis</li>
+                        <li className="menu-text"><div class="logoimg">xxxxxxx</div></li>
                     </ul>
                 </div>
             </div>
