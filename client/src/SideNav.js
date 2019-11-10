@@ -6,7 +6,7 @@ function SideNav() {
     return(
         <div className="sidenav">
             <div className="nav-wrapper">
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for graphs">
+            <input className = "searchInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for graphs">
             </input>
               <div className="dropdown">
                 <div className="dropdowncategory dropdownhighlight">

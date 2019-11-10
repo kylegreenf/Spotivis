@@ -23,8 +23,13 @@
 }
 
 .Below{
-    margin-top: 70px;
+  margin-top: 70px;
 }
+
+.searchInput {
+  padding-top: 15px;
+}
+
 
 .returnlogin {
 

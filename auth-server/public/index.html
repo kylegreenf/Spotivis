@@ -34,7 +34,7 @@
         color: white;
         border: 3px solid black; /* Green */
         border-radius: 1600px;
-        text-shadow: -1.8px 2.5px #000000;
+        text-shadow: 1px 2.5px #000000;
         position: static;
         text-align: center;
         font-size: 400%;
@@ -79,6 +79,9 @@
         border-width: 1px;
         width: 100%;
       }
+      .logocontainer {
+        background-color: black;
+      }
       .logo {
         height: 100%;
         width: 27%;
@@ -87,7 +90,7 @@
         min-width: 250px;
         padding-top: 30%;
         max-width: 400px;
-        background-color: #764abc;
+        background-color: white;
         -webkit-mask: url(./spotivis-logo-text.svg) no-repeat center;
         mask: url(./spotivis-logo-text.svg) no-repeat center;
         height: 90px;
@@ -100,12 +103,13 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class = "logocontainer">
       <div class = "logo">
         <div class="logoimg"></div>
       </div>
+    </div>
+    <div class="container">
       <div id="login" class = "mainmenu">
-        <hr class = "topline">
         <br/>
         <h1 class = "welcometext">Welcome to Spotiviz!</h1>
         <br/>
@@ -114,6 +118,8 @@
         <a href="/login" class="btn btn-primary loginbutton buttontext">Log in with Spotify</a>
         <br/><br/><br/>
         <h3 class = "disclamertext">(Just as a reminder, we never store your data and only present to you data Spotify has made avaliable)</h3>
+        <br/>
+        <hr class = "topline"/>
       </div>
       <div class="line"></div>
       <div id="loggedin">
