@@ -13,7 +13,7 @@
         font-family: Helvetica;
       }
       .container {
-        background-color: #FFFFFC;
+
       }
       #login, #loggedin {
         display: none;
@@ -31,31 +31,41 @@
         padding: 15px 35px 15px;
         background: #764abc;
         color: white;
-        border: 2px solid black; /* Green */
+        border: 3px solid black; /* Green */
         border-radius: 1600px;
         text-shadow: -1.8px 2.5px #000000;
         position: static;
+        text-align: center;
+        font-size: 400%;
+        font-weight: bold;
       }
       .loginbutton:hover {
         background-color: #5D30A5;
         color: white;
         border: 4px solid black; /* Green */
         position: static;
-        padding: 13px 35px 13px;
+        padding: 14px 35px 14px;
+        transform: scale(1.05) perspective(1px)
+      }
+      .buttontext {
 
+        color: white;
       }
       .welcometext {
         text-align: center;
         font-size: 400%;
         font-weight: bold;
+        color: #17252A;
       }
       .infotext {
         font-size: 275%;
+        color: #17252A;
       }
       .disclamertext {
         font-size: 180%;
         font-weight:lighter;
         font-style: italic;
+        color: #17252A;
       }
       .mainmenu {
         text-align: center;
@@ -77,6 +87,10 @@
         mask: url(./spotivis-logo-text.svg) no-repeat center;
         height: 90px;
       }
+      body {
+        background-color:  #FEFFFF;
+      }
+
     </style>
   </head>
 
@@ -92,7 +106,7 @@
         <br/>
         <h3 class = "infotext">Here you can see statistics, charts, and graphs on all of your Spotify listening history!</h3>
         <br/>
-        <a href="/login" class="btn btn-primary loginbutton welcometext">Log in with Spotify</a>
+        <a href="/login" class="btn btn-primary loginbutton buttontext">Log in with Spotify</a>
         <br/><br/><br/>
         <h3 class = "disclamertext">(Just as a reminder, we never store your data and only present to you data Spotify has made avaliable)</h3>
       </div>

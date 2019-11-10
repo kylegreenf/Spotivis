@@ -10,6 +10,7 @@ import SideNav from './SideNav';
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 var Chart = require('chart.js');
+var username = "lol";
 
 class App extends Component {
   constructor(){
@@ -24,7 +25,8 @@ class App extends Component {
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
       importantInfo: { //Important information to be used by our app
         numSavedSongs: 0, //Count of songs saved by a user
-        apiResponses: 0
+        apiResponses: 0,
+        display_name: null,
       },
       mostDanceableSong: {
         name: 'Not Checked',
@@ -50,25 +52,12 @@ class App extends Component {
     this.donutChart()
     this.barChart()
 
-    /*
-    spotifyApi.getMyCurrentPlaybackState()
+    spotifyApi.getMe()
       .then((response) => {
-        if (response.item != null) {
-          this.setState({
-            nowPlaying: {
-                name: response.item.name,
-                albumArt: response.item.album.images[0].url
-              }
-          });
+        if (response.display_name != null) {
+          username = response.display_name
         }
-        else {
-          this.setState({
-            nowPlaying: {
-                name: "Nothing is playing currently"
-              }
-          });
-        }
-      })*/
+      });
   }
 
 // Helps getAllSavedTracks info for 50 songs sent with offset
@@ -140,7 +129,7 @@ class App extends Component {
 
   }
 
-
+// Sort all tracks by most danceable attribute
   sortMostDanceable() {
     var tracks = this.state.multiTracks.tracks;
     tracks.sort((a, b) => (a.danceability > b.danceability) ? 1 : -1);
@@ -155,7 +144,7 @@ class App extends Component {
     })
   }
 
-
+// Graphs and barchart tests
  barChart(dataArr, LabelsArr) {
     var ctx = 'genreChart';
 
@@ -192,6 +181,7 @@ class App extends Component {
     });
  }
 
+// Donut chart test
   donutChart(dataArr, LabelsArr) {
     var ctx = 'donut-chart';
 
@@ -220,6 +210,8 @@ class App extends Component {
         });
    }
 
+// When page first loads, check if logged in. If not, redirect to log in.
+// Otherwise, find all the user's data.
   componentDidMount() {
     if (this.state.loggedIn === false) {
       window.location.replace("http://localhost:8888/");
@@ -249,10 +241,9 @@ class App extends Component {
         <div className="Below">
           <TopBar />
           <div className="SideNav-Wrapper">
-            <SideNav />
+            <SideNav/>
           </div>
           <div className="Content">
-            <a href='http://localhost:8888' > Return to Login page </a>
             <div>
               You have saved: {this.state.importantInfo.numSavedSongs}
             </div>

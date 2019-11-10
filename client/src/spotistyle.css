@@ -26,6 +26,16 @@
     margin-top: 70px;
 }
 
+.returnlogin {
+
+  margin-left: 60%;
+  padding-left: 20%;
+  position: fixed;
+  font-size: 70%;
+  display: inline-block;
+  white-space: nowrap;
+  top: 18px;
+}
 
 .sidenav{
     height: 100%;
@@ -54,6 +64,7 @@
   color: white;
   border-style: solid;
   border-width: 2px;
+  transform: scale(1.10) perspective(1px)
 }
 
 .dropdownselection {

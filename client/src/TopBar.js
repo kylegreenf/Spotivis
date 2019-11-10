@@ -9,6 +9,7 @@ function TopBar() {
                 <div className="top-bar">
                     <ul className="menu" data-dropdown-menu>
                         <li className="menu-text"><div class="logoimg">xxxxxxx</div></li>
+                        <li className = "returnlogin"><a href='http://localhost:8888'>Log out</a></li>
                     </ul>
                 </div>
             </div>
