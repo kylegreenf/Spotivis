@@ -27,18 +27,12 @@ function SideNav() {
                   <a href="#">Totals</a>
                 </div>
                 <div className="dropdownselection">
-                <div className="dropdownselection dropdownhighlight">
-                  <a href = "#">- Artists</a>
-                </div>
-                <div className="dropdownselection dropdownhighlight">
-                  <a href = "#">- Songs</a>
-                </div>
-                <div className="dropdownselection dropdownhighlight">
-
-                </div>
-
-
-
+                  <div className="dropdownselection dropdownhighlight">
+                    <a href = "#">- Artists</a>
+                  </div>
+                  <div className="dropdownselection dropdownhighlight">
+                    <a href = "#">- Songs</a>
+                  </div>
                 </div>
               </div>
               <div className="dropdown">

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Spotivis - Data Visualization</title>
+    <title>Spotiviz - Spotify Data Visualization</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
       @font-face {
@@ -27,25 +27,50 @@
         line-height: 60px;
         font-weight: bold;
         padding: 0 35px;
-        background: #1DB954;
+        background: #764abc;;
         color: white;
         border: none;
         border-radius: 1600px;
-        text-shadow: -.2px .3px #000000;
+        text-shadow: -1.8px 2.5px #000000;
+      }
+      .loginbutton:hover {
+        background-color: #765Fbc;
+        color: white;
+        border: 2px solid black; /* Green */
+
+      }
+      .welcometext {
+        text-align: center;
+        font-size: 400%;
+        font-weight: bold;
+      }
+      .infotext {
+        font-size: 275%;
+      }
+      .disclamertext {
+        font-size: 180%;
+        font-weight:lighter;
+        font-style: italic;
       }
       .mainmenu {
         text-align: center;
+        font-size:
       }
       .topline{
         display: block;
-        margin-before: 0.5em;
-        margin-after: 0.5em;
-        margin-start: auto;
-        margin-end: auto;
         overflow: hidden;
         border-style: inset;
         border-width: 1px;
         width: 100%;
+      }
+      .logo {
+        width: 27%;
+      }
+      .logoimg {
+        background-color: #764abc;
+        -webkit-mask: url(./spotivis-logo-text.svg) no-repeat center;
+        mask: url(./spotivis-logo-text.svg) no-repeat center;
+        height: 90px;
       }
     </style>
   </head>
@@ -53,14 +78,18 @@
   <body>
     <div class="container">
       <div class = "logo">
-        <h2>Spotivis (0)</h2>
+        <div class="logoimg">xxxssssssxxxx</div>
       </div>
       <div id="login" class = "mainmenu">
         <hr class = "topline">
-        <h1>Welcome 2 Spotivis!</h1>
-        <h3>Here you can see statistics, charts, and graphs on all of your Spotify listening history!</h3>
-        <a href="/login" class="btn btn-primary loginbutton">Log in with Spotify</a>
-        <h3>Just as a reminder, we never store your data and only present to you data Spotify has made avaliable.</h3>
+        <br/>
+        <h1 class = "welcometext">Welcome to Spotiviz!</h1>
+        <br/>
+        <h3 class = "infotext">Here you can see statistics, charts, and graphs on all of your Spotify listening history!</h3>
+        <br/>
+        <a href="/login" class="btn btn-primary loginbutton welcometext">Log in with Spotify</a>
+        <br/><br/><br/>
+        <h3 class = "disclamertext">(Just as a reminder, we never store your data and only present to you data Spotify has made avaliable)</h3>
       </div>
       <div class="line"></div>
       <div id="loggedin">
