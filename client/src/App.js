@@ -147,7 +147,7 @@ class App extends Component {
  barChart(dataArr, LabelsArr) {
     var ctx = 'genreChart';
 
-    var dataArr = [4, 12, 554, 2, 12]
+    var dataArr = [4, 12, 52, 2, 12]
     var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"]
     var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
     var options = {
@@ -189,7 +189,7 @@ class App extends Component {
                 text: title
             },
             legend:{
-                display:false
+                display:true
             }
         };
 
@@ -212,8 +212,8 @@ class App extends Component {
     var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
     var valenceData = this.getBucketCount(valenceCounts);
     var valenceLabels = this.getBucketLabel(valenceCounts);
-    var colors = ["#000000", "#1A1A1A","#333333","#4D4D4D","#696969","#808080","#999999","#B0B0B0","#C9C9C9","#E3E3E3","#FFFFFF"]
-    var title = 'Valence break down of your saved songs'
+    var colors = ["#FF0000", "#FF3400","#FF6900","#FF9E00","#FFC100","#FFF600","#D4FF00","#9FFF00","#6AFF00","#35FF00","#00FF00"]
+    var title = 'Happiness break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title);
     this.barChart();
   }
@@ -224,18 +224,10 @@ class App extends Component {
     if (this.state.loggedIn === false) {
       window.location.replace("http://localhost:8888/");
     }
-    const script = document.createElement("script");
-    script.src = "./timeframe-dropdown.js";
-    script.async = true;
-    script.onload = () => this.scriptLoaded();
 
-    document.body.appendChild(script);
     this.getNowPlaying();
   }
 
-  scriptLoaded() {
-    console.log("loaded");
-  }
 
   getBucketCount(dict){
     var valArr = [];
