@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { HashRouter, Route, Redirect, Switch} from "react-router-dom";
 import './App.css';
 import './foundation.css';
 import './spotistyle.css';
@@ -13,8 +13,12 @@ var Chart = require('chart.js');
 var username = "lol";
 
 class App extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
+    //console.log(this.props.history.location);
+
+    window.location = "localhost:8888";
+
     const params = this.getHashParams();
     const token = params.access_token;
     if (token) {
@@ -35,6 +39,7 @@ class App extends Component {
       loaded: false,
     }
   }
+
   getHashParams() {
     var hashParams = {};
     var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -213,9 +218,12 @@ class App extends Component {
 // When page first loads, check if logged in. If not, redirect to log in.
 // Otherwise, find all the user's data.
   componentDidMount() {
-    if (this.state.loggedIn === false) {
-      window.location.replace("http://localhost:8888/");
+    const { loggedIn } = this.state;
+
+    if(!loggedIn){
+      window.location = "http://localhost:8888";
     }
+    
     this.getNowPlaying();
   }
 
