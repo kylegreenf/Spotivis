@@ -220,10 +220,10 @@ class App extends Component {
   }
 
   render() {
-    let {loaded} = this.state;
+    let {loaded} = this.state.loaded;
     return (
       <div className="App">
-        {loaded ?
+        {!loaded ?
           ("") :
           (<div class = "loadingscreen">
             <h1>Loading</h1>

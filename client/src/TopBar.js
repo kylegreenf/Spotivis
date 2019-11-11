@@ -9,11 +9,11 @@ function TopBar() {
             <div className="sticky sticy-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
                 <div className="top-bar">
                     <ul className="menu" data-dropdown-menu>
-                        <li className="menu-text"><div class="logoimg">xxxxxxx</div></li>
+                        <li className="menu-text"><div className="logoimg">xxxxxxx</div></li>
 
-                        <li className="dropdown"><div class="dropdown">
-                          <button onclick="myFunction()" class="dropbtn">Timeframe</button>
-                            <div id="myDropdown" class="dropdown-content">
+                        <li className="dropdown"><div className="dropdown">
+                          <button onClick="myFunction()" className="dropbtn">Timeframe</button>
+                            <div id="myDropdown" className="dropdown-content">
                               <a href="#home">Home</a>
                               <a href="#about">About</a>
                               <a href="#contact">Contact</a>
