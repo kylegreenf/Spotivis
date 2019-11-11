@@ -14,9 +14,10 @@ function TopBar() {
                           <div className="dropdown">
                           <button onClick={myFunction} className="dropbtn">All saved songs</button>
                             <div id="myDropdown" className="dropdown-content">
-                              <a href="#home">All saved songs</a>
-                              <a href="#about">Past 3 months</a>
-                              <a href="#contact">Past 6 months</a>
+                              <a href="#home">All currently saved songs</a>
+                              <a href="#about">All listening history</a>
+                              <a href="#about">Past 6 month listening history</a>
+                              <a href="#contact">Past 4 weeks listening history</a>
                             </div>
                           </div>
                         </li>
