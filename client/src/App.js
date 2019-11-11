@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './App.css';
-import splitByValence from './statsHelper';
+//import splitByValence from './statsHelper';
 import './foundation.css';
 import './spotistyle.css';
 
@@ -92,7 +92,7 @@ class App extends Component {
               },
             });
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
-                    this.drawCharts();                      
+                    this.drawCharts();
                     this.sortMostDanceable();
             }
           });
@@ -189,7 +189,7 @@ class App extends Component {
                 text: title
             },
             legend:{
-                display:false            
+                display:false
             }
         };
 
@@ -213,7 +213,7 @@ class App extends Component {
     var valenceData = this.getBucketCount(valenceCounts);
     var valenceLabels = this.getBucketLabel(valenceCounts);
     var colors = ["#000000", "#1A1A1A","#333333","#4D4D4D","#696969","#808080","#999999","#B0B0B0","#C9C9C9","#E3E3E3","#FFFFFF"]
-    var title = 'Valence break down of your saved songs'    
+    var title = 'Valence break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title);
     this.barChart();
   }
@@ -226,12 +226,12 @@ class App extends Component {
     }
     this.getNowPlaying();
   }
-  
+
   getBucketCount(dict){
     var valArr = [];
     for (var key in dict){
         valArr.push(dict[key])
-    }      
+    }
     return valArr;
   }
 
@@ -239,7 +239,7 @@ class App extends Component {
     var valArr = [];
     for (var key in dict){
         valArr.push(key.toString() + "-" +(parseInt(key)+10))
-    }      
+    }
     return valArr;
   }
 
@@ -251,7 +251,7 @@ class App extends Component {
         val = (Math.floor(val*10))*10
 
         if(val in countDict){
-            countDict[val] += 1        
+            countDict[val] += 1
         }else{
             countDict[val] = 1
         }
