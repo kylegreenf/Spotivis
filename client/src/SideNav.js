@@ -6,54 +6,72 @@ function SideNav() {
     return(
         <div className="sidenav">
             <div className="nav-wrapper">
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for graphs">
+            <input className = "searchInput" type="text" id="myInput" onKeyUp="searchGraphs()" placeholder="Search for graphs">
             </input>
-              <div className="dropdown">
-                <div className="dropdowncategory">
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
                   <a href="#">Top 5</a>
                 </div>
-                  <div className="dropdownselection">
+                  <div className="graphdropdownselection graphdropdownhighlight">
                     <a href = "#">- Artists</a>
+                      </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
                     <a href = "#">- Songs</a>
+                      </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
                     <a href = "#">- Albums</a>
                   </div>
               </div>
-              <div className="dropdown">
-                <div className="dropdowncategory">
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
                   <a href="#">Totals</a>
                 </div>
-                <div className="dropdownselection">
-                  <a href = "#">- Artists</a>
-                  <a href = "#">- Songs</a>
-                  <a href = "#">- Albums</a>
+                <div className="graphdropdownselection">
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Artists</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Songs</a>
+                  </div>
                 </div>
               </div>
-              <div className="dropdown">
-                <div className="dropdowncategory">
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
                   <a href="#">Genre Breakdown</a>
                 </div>
 
               </div>
-              <div className="dropdown">
-                <div className="dropdowncategory">
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
                   <a href="#">Hipster Rating</a>
                 </div>
 
-                <div className="dropdownselection">
-                  <a href = "#">- Average popularity</a>
-                  <a href = "#">- Most popular</a>
-                  <a href = "#">- Most underground</a>
+                <div className="graphdropdownselection">
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Average popularity</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Most popular</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Most underground</a>
+                  </div>
                 </div>
               </div>
-              <div className="dropdown">
-                <div className="dropdowncategory">
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
                   <a href="#">Averages</a>
                 </div>
-
-                <div className="dropdownselection">
-                  <a href = "#">- Average danceability</a>
-                  <a href = "#">- Average happiness</a>
-                  <a href = "#">- Average energy</a>
+                <div className="graphdropdownselection">
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Average danceability</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Average happiness</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Average energy</a>
+                  </div>
                 </div>
               </div>
             </div>

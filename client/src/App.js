@@ -3,12 +3,14 @@ import { HashRouter, Route, Redirect, Switch} from "react-router-dom";
 import './App.css';
 import './foundation.css';
 import './spotistyle.css';
+
 import TopBar from './TopBar';
 import SideNav from './SideNav';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 var Chart = require('chart.js');
+var username = "lol";
 
 class App extends Component {
   constructor(props){
@@ -24,16 +26,17 @@ class App extends Component {
     }
     this.state = {
       loggedIn: token ? true : false, // True if user is logged in
-      nowPlaying: { name: 'Not Checked', albumArt: '' }, // Name of current song + picture
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
       importantInfo: { //Important information to be used by our app
         numSavedSongs: 0, //Count of songs saved by a user
-        apiResponses: 0
+        apiResponses: 0,
+        display_name: null,
       },
       mostDanceableSong: {
         name: 'Not Checked',
         albumArt: ''
       },
+      loaded: false,
     }
   }
 
@@ -50,30 +53,16 @@ class App extends Component {
   }
 
   getNowPlaying(){
+    this.getAllSavedTracks();
     this.donutChart()
     this.barChart()
 
-    //To remove
-    this.getAllSavedTracks();
-
-    spotifyApi.getMyCurrentPlaybackState()
+    spotifyApi.getMe()
       .then((response) => {
-        if (response.item != null) {
-          this.setState({
-            nowPlaying: {
-                name: response.item.name,
-                albumArt: response.item.album.images[0].url
-              }
-          });
+        if (response.display_name != null) {
+          username = response.display_name
         }
-        else {
-          this.setState({
-            nowPlaying: {
-                name: "Nothing is playing currently"
-              }
-          });
-        }
-      })
+      });
   }
 
 // Helps getAllSavedTracks info for 50 songs sent with offset
@@ -108,7 +97,9 @@ class App extends Component {
             });
 
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
-                      this.sortMostDanceable();
+              this.sortMostDanceable();
+              //remove loading loading screen
+
             }
           });
 
@@ -143,7 +134,7 @@ class App extends Component {
 
   }
 
-
+// Sort all tracks by most danceable attribute
   sortMostDanceable() {
     var tracks = this.state.multiTracks.tracks;
     tracks.sort((a, b) => (a.danceability > b.danceability) ? 1 : -1);
@@ -153,9 +144,12 @@ class App extends Component {
           albumArt: tracks[this.state.importantInfo.numSavedSongs-1].album.images[0].url,
         }
     });
+    this.setState({
+      loaded: true,
+    })
   }
 
-
+// Graphs and barchart tests
  barChart(dataArr, LabelsArr) {
     var ctx = 'genreChart';
 
@@ -192,6 +186,7 @@ class App extends Component {
     });
  }
 
+// Donut chart test
   donutChart(dataArr, LabelsArr) {
     var ctx = 'donut-chart';
 
@@ -220,8 +215,9 @@ class App extends Component {
         });
    }
 
+// When page first loads, check if logged in. If not, redirect to log in.
+// Otherwise, find all the user's data.
   componentDidMount() {
-
     const { loggedIn } = this.state;
 
     if(!loggedIn){
@@ -232,27 +228,32 @@ class App extends Component {
   }
 
   render() {
-
+    let {loaded} = this.state.loaded;
     return (
       <div className="App">
+        {!loaded ?
+          ("") :
+          (<div class = "loadingscreen">
+            <h1>Loading</h1>
+            <h2>Please bear with us while we analyze your listening history</h2>
+            <h3>This should take no longer than 30 seconds.</h3>
+            <br/>
+            <div class="item">
+				        <div class="loader09">
+                </div>
+			      </div>
+          </div>
+          )}
 
-        <TopBar />
+
         <div className="Below">
+          <TopBar />
           <div className="SideNav-Wrapper">
-            <SideNav />
+            <SideNav/>
           </div>
           <div className="Content">
-            <a href='http://localhost:8888' > Login to Spotify </a>
-            <div>
-              Now Playing: { this.state.nowPlaying.name }
-            </div>
-            <div>
-              <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }} alt = ""/>
-            </div>
-            <div>
             <div>
               You have saved: {this.state.importantInfo.numSavedSongs}
-            </div>
             </div>
             <div>
               Your most danceable song: {this.state.mostDanceableSong.name}

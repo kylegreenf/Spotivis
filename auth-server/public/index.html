@@ -1,9 +1,20 @@
 <!doctype html>
 <html>
   <head>
-    <title>Spotivis - Data Visualization</title>
+    <title>Spotiviz - Spotify Data Visualization</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
+      @font-face {
+        font-family: Montserrat;
+        src: url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+      }
+
+      * {
+        font-family: Helvetica;
+      }
+      .container {
+
+      }
       #login, #loggedin {
         display: none;
       }
@@ -14,44 +25,97 @@
         width: 500px;
       }
       .loginbutton {
+
         margin-top: 20px;
         line-height: 60px;
         font-weight: bold;
-        padding: 0 35px;
-        background: #1DB954;
+        padding: 15px 35px 15px;
+        background: #764abc;
         color: white;
-        border: none;
+        border: 3px solid black; /* Green */
         border-radius: 1600px;
-        text-shadow: -.2px .3px #000000;
+        text-shadow: 1px 2.5px #000000;
+        position: static;
+        text-align: center;
+        font-size: 400%;
+        font-weight: bold;
+      }
+      .loginbutton:hover {
+        background-color: #5D30A5;
+        color: white;
+        border: 4px solid black; /* Green */
+        position: static;
+        padding: 14px 35px 14px;
+        transform: scale(1.05) perspective(1px)
+      }
+      .buttontext {
+
+        color: white;
+      }
+      .welcometext {
+        text-align: center;
+        font-size: 400%;
+        font-weight: bold;
+        color: #17252A;
+      }
+      .infotext {
+        font-size: 275%;
+        color: #17252A;
+      }
+      .disclamertext {
+        font-size: 180%;
+        font-weight:lighter;
+        font-style: italic;
+        color: #17252A;
       }
       .mainmenu {
         text-align: center;
+        font-size:
       }
       .topline{
         display: block;
-        margin-before: 0.5em;
-        margin-after: 0.5em;
-        margin-start: auto;
-        margin-end: auto;
         overflow: hidden;
         border-style: inset;
         border-width: 1px;
         width: 100%;
       }
+      .logo {
+        height: 100%;
+        width: 27%;
+      }
+      .logoimg {
+        min-width: 250px;
+        padding-top: 30%;
+        max-width: 400px;
+        background-color: #764abc;
+        -webkit-mask: url(./spotivis-logo-text.svg) no-repeat center;
+        mask: url(./spotivis-logo-text.svg) no-repeat center;
+        height: 90px;
+      }
+      body {
+        background-color:  #FEFFFF;
+      }
+
     </style>
   </head>
 
   <body>
     <div class="container">
       <div class = "logo">
-        <h2>Spotivis (0)</h2>
+        <div class="logoimg"></div>
       </div>
       <div id="login" class = "mainmenu">
         <hr class = "topline">
-        <h1>Welcome 2 Spotivis!</h1>
-        <h3>Here you can see statistics, charts, and graphs on all of your Spotify listening history!</h3>
-        <a href="/login" class="btn btn-primary loginbutton">Log in with Spotify</a>
-        <h3>Just as a reminder, we never store your data and only present to you data Spotify has made avaliable.</h3>
+        <br/>
+        <h1 class = "welcometext">Welcome to Spotiviz!</h1>
+        <br/>
+        <h3 class = "infotext">Here you can see statistics, charts, and graphs on all of your Spotify listening history!</h3>
+        <br/>
+        <a href="/login" class="btn btn-primary loginbutton buttontext">Log in with Spotify</a>
+        <br/><br/><br/>
+        <h3 class = "disclamertext">(Just as a reminder, we never store your data and only present to you data Spotify has made avaliable)</h3>
+        <br/>
+        <hr class = "topline"/>
       </div>
       <div class="line"></div>
       <div id="loggedin">

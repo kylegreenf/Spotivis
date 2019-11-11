@@ -28,7 +28,7 @@
 }
 
 .Chart-container {
-    margin: auto;
+  margin: auto;
   max-width: 500px;
   max-height: 500px;
 }
@@ -36,3 +36,45 @@
 div, button {
   margin: 10px;
 }
+
+.loadingscreen {
+  position: fixed;
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  background: white;
+  z-index: 99999;
+  text-align: center;
+  font-size: 24px;
+  padding-top: 24px;
+  font-family: Montserrat;
+}
+
+.loader09 {
+  width: 10px;
+  height: 48px;
+  background: #764abc;
+  position: relative;
+  animation: loader09-u3e967ec0 1s ease-in-out infinite;
+  animation-delay: 0.4s;
+  top: 50%;
+  margin: -28px auto 0; }
+  .loader09::after, .loader09::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 48px;
+    background: #764abc;
+    animation: loader09-u3e967ec0 1s ease-in-out infinite; }
+  .loader09::before {
+    right: 18px;
+    animation-delay: 0.2s; }
+  .loader09::after {
+    left: 18px;
+    animation-delay: 0.6s; }
+
+@keyframes loader09-u3e967ec0 {
+  0%, 100% {
+    box-shadow: 0 0 0 #764abc, 0 0 0 #764abc; }
+  50% {
+    box-shadow: 0 -8px 0 #764abc, 0 8px 0 #764abc; } }
