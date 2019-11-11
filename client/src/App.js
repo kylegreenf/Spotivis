@@ -224,7 +224,17 @@ class App extends Component {
     if (this.state.loggedIn === false) {
       window.location.replace("http://localhost:8888/");
     }
+    const script = document.createElement("script");
+    script.src = "./timeframe-dropdown.js";
+    script.async = true;
+    script.onload = () => this.scriptLoaded();
+
+    document.body.appendChild(script);
     this.getNowPlaying();
+  }
+
+  scriptLoaded() {
+    console.log("loaded");
   }
 
   getBucketCount(dict){

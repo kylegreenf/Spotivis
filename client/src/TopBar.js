@@ -2,7 +2,6 @@ import React from 'react'
 import './foundation.css'
 import './spotistyle.css'
 
-
 function TopBar() {
     return(
         <div className="top-bar-container" data-sticky-container>
@@ -11,12 +10,13 @@ function TopBar() {
                     <ul className="menu" data-dropdown-menu>
                         <li className="menu-text"><div className="logoimg">xxxxxxx</div></li>
 
-                        <li className="dropdown"><div className="dropdown">
-                          <button onClick="myFunction()" className="dropbtn">Timeframe</button>
+                        <li className="dropdown">Select analysis timeframe:
+                          <div className="dropdown">
+                          <button onClick={myFunction} className="dropbtn">All saved songs</button>
                             <div id="myDropdown" className="dropdown-content">
-                              <a href="#home">Home</a>
-                              <a href="#about">About</a>
-                              <a href="#contact">Contact</a>
+                              <a href="#home">All saved songs</a>
+                              <a href="#about">Past 3 months</a>
+                              <a href="#contact">Past 6 months</a>
                             </div>
                           </div>
                         </li>
@@ -28,5 +28,26 @@ function TopBar() {
     )
 
 }
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
 
 export default TopBar

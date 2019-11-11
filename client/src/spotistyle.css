@@ -117,6 +117,7 @@
 .dropdown {
   position: relative;
   display: inline-block;
+  z-index: 3;
 }
 
 .dropdown-content {
