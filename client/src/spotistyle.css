@@ -59,7 +59,15 @@
     display: block;
     color: white;
     text-align: left;
-    text-indent: 35px;
+    text-indent: 20px;
+}
+
+.sideNavParent {
+
+}
+
+.sideNavChild {
+  padding-left: 25px;
 }
 
 .graphdropdown *{
