@@ -3,12 +3,17 @@ import React, { Component } from 'react';
 import './App.css';
 import './foundation.css';
 import './spotistyle.css';
+
 import TopBar from './TopBar';
 import SideNav from './SideNav';
+import formatTopFive from './topFiveFormater';
+
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
+var stats = require('./statsHelper');
 var Chart = require('chart.js');
+var username = "lol";
 
 class App extends Component {
   constructor(){
@@ -20,16 +25,18 @@ class App extends Component {
     }
     this.state = {
       loggedIn: token ? true : false, // True if user is logged in
-      nowPlaying: { name: 'Not Checked', albumArt: '' }, // Name of current song + picture
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
       importantInfo: { //Important information to be used by our app
         numSavedSongs: 0, //Count of songs saved by a user
-        apiResponses: 0
+        apiResponses: 0,
+        display_name: null,
       },
       mostDanceableSong: {
         name: 'Not Checked',
         albumArt: ''
       },
+      topFives: {},
+      loaded: false,
     }
   }
   getHashParams() {
@@ -45,27 +52,16 @@ class App extends Component {
   }
 
   getNowPlaying(){
-    //To remove
     this.getAllSavedTracks();
+    this.donutChart()
+    this.barChart()
 
-    spotifyApi.getMyCurrentPlaybackState()
+    spotifyApi.getMe()
       .then((response) => {
-        if (response.item != null) {
-          this.setState({
-            nowPlaying: {
-                name: response.item.name,
-                albumArt: response.item.album.images[0].url
-              }
-          });
+        if (response.display_name != null) {
+          username = response.display_name
         }
-        else {
-          this.setState({
-            nowPlaying: {
-                name: "Nothing is playing currently"
-              }
-          });
-        }
-      })
+      });
   }
 
 // Helps getAllSavedTracks info for 50 songs sent with offset
@@ -101,6 +97,8 @@ class App extends Component {
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
                     this.drawCharts();                      
                     this.sortMostDanceable();
+                    this.displayTopFives();
+              //remove loading loading screen
             }
           });
 
@@ -135,7 +133,7 @@ class App extends Component {
 
   }
 
-
+// Sort all tracks by most danceable attribute
   sortMostDanceable() {
     var tracks = this.state.multiTracks.tracks;
     tracks.sort((a, b) => (a.danceability > b.danceability) ? 1 : -1);
@@ -145,9 +143,12 @@ class App extends Component {
           albumArt: tracks[this.state.importantInfo.numSavedSongs-1].album.images[0].url,
         }
     });
+    this.setState({
+      loaded: true,
+    })
   }
 
-
+// Graphs and barchart tests
  barChart(dataArr, LabelsArr) {
     var ctx = 'genreChart';
 
@@ -184,9 +185,10 @@ class App extends Component {
     });
  }
 
-  donutChart(dataArr, labelsArr, colorsArr, title) {
+  donutChart(dataArr, labelsArr, colorsArr, title, chartName="valence-breakdown") {
     var tracks = this.state.multiTracks.tracks;
-    var ctx = 'donut-chart';
+    //chartName = "valence-breakdown";
+    var ctx = chartName;
 
         var options = {
             elements: {
@@ -219,74 +221,63 @@ class App extends Component {
         });
    }
 
+
   drawCharts(){
-    var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
-    var valenceData = this.getBucketCount(valenceCounts);
-    var valenceLabels = this.getBucketLabel(valenceCounts);
+    var valenceCounts = stats.splitByField(this.state.multiTracks.tracks,"valence");
+    var valenceData = stats.getBucketCount(valenceCounts);
+    var valenceLabels = stats.getBucketLabel(valenceCounts);
     var colors = ["#000000", "#1A1A1A","#333333","#4D4D4D","#696969","#808080","#999999","#B0B0B0","#C9C9C9","#E3E3E3","#FFFFFF"]
     var title = 'Valence break down of your saved songs'    
-    this.donutChart(valenceData,valenceLabels, colors,title);
-    this.barChart();
+    this.donutChart(valenceData,valenceLabels, colors,title,"valence-breakdown");
   }
 
+  displayTopFives(){
+  var fields = ['valence','danceability','tempo','liveness','loudness','energy','duration_ms','popularity']
+  for (var f in fields){
+      var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f])
+      this.state.topFives[f] = topFiveArr;
+  }
+
+}
+
+// When page first loads, check if logged in. If not, redirect to log in.
+// Otherwise, find all the user's data.
   componentDidMount() {
+    if (this.state.loggedIn === false) {
+      window.location.replace("http://localhost:8888/");
+    }
     this.getNowPlaying();
   }
   
-  getBucketCount(dict){
-    var valArr = [];
-    for (var key in dict){
-        valArr.push(dict[key])
-    }      
-    return valArr;
-  }
 
-  getBucketLabel(dict){
-    var valArr = [];
-    for (var key in dict){
-        valArr.push(key.toString() + "-" +(parseInt(key)+10))
-    }      
-    return valArr;
-  }
-
-  splitByValence(tracks){
-    var totalLen = tracks.length
-    var countDict = {}
-    for (var i in tracks){
-        var val = tracks[i].valence
-        val = (Math.floor(val*10))*10
-
-        if(val in countDict){
-            countDict[val] += 1        
-        }else{
-            countDict[val] = 1
-        }
-    }
-    return countDict
-  }
 
   render() {
-
+    let {loaded} = this.state;
     return (
       <div className="App">
+        {loaded ?
+          ("") :
+          (<div class = "loadingscreen">
+            <h1>Loading</h1>
+            <h2>Please bear with us while we analyze your listening history</h2>
+            <h3>This should take no longer than 30 seconds.</h3>
+            <br/>
+            <div class="item">
+				        <div class="loader09">
+                </div>
+			      </div>
+          </div>
+          )}
 
-        <TopBar />
+
         <div className="Below">
+          <TopBar />
           <div className="SideNav-Wrapper">
-            <SideNav />
+            <SideNav/>
           </div>
           <div className="Content">
-            <a href='http://localhost:8888' > Login to Spotify </a>
-            <div>
-              Now Playing: { this.state.nowPlaying.name }
-            </div>
-            <div>
-              <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }} alt = ""/>
-            </div>
-            <div>
             <div>
               You have saved: {this.state.importantInfo.numSavedSongs}
-            </div>
             </div>
             <div>
               Your most danceable song: {this.state.mostDanceableSong.name}
@@ -294,9 +285,12 @@ class App extends Component {
             <div>
               <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
             </div>
+            <div className="Top 5s">
+                Your Top 5 Most Valent Songs :
+                <script>formatTopFive(this.state.topFives['valence']);</script>
+            </div>
             <div className="Chart-container">
-                <canvas id="donut-chart" width="2" height="1"></canvas>
-                <canvas id="genreChart" width="400" height="200"></canvas>
+                <canvas id="valence-breakdown" width="2" height="1"></canvas>
             </div>
             <div>
               <h1>Content</h1>

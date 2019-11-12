@@ -5,25 +5,80 @@ import './spotistyle.css'
 function SideNav() {
     return(
         <div className="sidenav">
-            <div class="nav-wrapper">
-              <div class="dropdown">
-                <a href="#">Top 5</a>
+            <div className="nav-wrapper">
+            <input className = "searchInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for graphs">
+            </input>
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
+                  <a href="#">Top 5</a>
+                </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Artists</a>
+                      </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Songs</a>
+                      </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Albums</a>
+                  </div>
               </div>
-              <div class="dropdown">
-                <a href="#">Totals</a>
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
+                  <a href="#">Totals</a>
+                </div>
+                <div className="graphdropdownselection">
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Artists</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Songs</a>
+                  </div>
+                </div>
               </div>
-              <div class="dropdown">
-                <a href="#">Genre Breakdown</a>
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
+                  <a href="#">Genre Breakdown</a>
+                </div>
+
               </div>
-              <div class="dropdown">
-                <a href="#">Hipster Rating</a>
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
+                  <a href="#">Hipster Rating</a>
+                </div>
+
+                <div className="graphdropdownselection">
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Average popularity</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Most popular</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Most underground</a>
+                  </div>
+                </div>
               </div>
-              <div class="dropdown">
-                <a href="#">Averages</a>
+              <div className="graphdropdown">
+                <div className="graphdropdowncategory graphdropdownhighlight">
+                  <a href="#">Averages</a>
+                </div>
+                <div className="graphdropdownselection">
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Average danceability</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Average happiness</a>
+                  </div>
+                  <div className="graphdropdownselection graphdropdownhighlight">
+                    <a href = "#">- Average energy</a>
+                  </div>
+                </div>
               </div>
             </div>
         </div>
     )
 }
+
+
 
 export default SideNav
