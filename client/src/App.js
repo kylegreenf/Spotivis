@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import './App.css';
+
+
 import './foundation.css';
 import './spotistyle.css';
 
@@ -127,7 +129,7 @@ class App extends Component {
           offset+= 50;
         }
 
-      });
+      }).catch(e => {console.log("xx");});
 
 
 
@@ -152,7 +154,7 @@ class App extends Component {
  barChart(dataArr, LabelsArr) {
     var ctx = 'genreChart';
 
-    var dataArr = [4, 12, 554, 2, 12]
+    var dataArr = [4, 12, 52, 2, 12]
     var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"]
     var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
     var options = {
@@ -189,7 +191,6 @@ class App extends Component {
     var tracks = this.state.multiTracks.tracks;
     //chartName = "valence-breakdown";
     var ctx = chartName;
-
         var options = {
             elements: {
                 arc: {
@@ -201,9 +202,8 @@ class App extends Component {
                 text: title
             },
             legend:{
-                display:false            
-            },
-
+                display:true
+            }
         };
 
 
@@ -240,19 +240,28 @@ class App extends Component {
 
 }
 
+
 // When page first loads, check if logged in. If not, redirect to log in.
 // Otherwise, find all the user's data.
   componentDidMount() {
     if (this.state.loggedIn === false) {
       window.location.replace("http://localhost:8888/");
     }
-    this.getNowPlaying();
+
+    try {
+      this.getNowPlaying();
+    }
+    catch(error) {
+      console.log("eerrr");
+    }
+
+
   }
-  
 
 
   render() {
     let {loaded} = this.state;
+    
     return (
       <div className="App">
         {loaded ?
