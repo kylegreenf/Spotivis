@@ -212,7 +212,7 @@ class App extends Component {
     var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
     var valenceData = this.getBucketCount(valenceCounts);
     var valenceLabels = this.getBucketLabel(valenceCounts);
-    var colors = ["#FF0000", "#FF3400","#FF6900","#FF9E00","#FFC100","#FFF600","#D4FF00","#9FFF00","#6AFF00","#35FF00","#00FF00"]
+    var colors = ["#FF0000", "#FF2E2E","#FF5C5C","#FFB4B4","#FFE1E1","#D0FFD0","#8BFF8B","#5CFF5C","#2EFF2E","#00FF00", "#008C00"]
     var title = 'Happiness break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title);
     this.barChart();
@@ -271,7 +271,7 @@ class App extends Component {
 
   render() {
     let {loaded} = this.state;
-    
+
     return (
       <div className="App">
         {loaded ?
