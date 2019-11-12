@@ -122,7 +122,7 @@ class App extends Component {
           offset+= 50;
         }
 
-      });
+      }).catch(e => {console.log("xx");});
 
 
 
@@ -225,7 +225,13 @@ class App extends Component {
       window.location.replace("http://localhost:8888/");
     }
 
-    this.getNowPlaying();
+    try {
+      this.getNowPlaying();
+    }
+    catch(error) {
+      console.log("eerrr");
+    }
+
   }
 
 
@@ -262,10 +268,10 @@ class App extends Component {
   }
 
   render() {
-    let {loaded} = this.state.loaded;
+    let {loaded} = this.state;
     return (
       <div className="App">
-        {!loaded ?
+        {loaded ?
           ("") :
           (<div class = "loadingscreen">
             <h1>Loading</h1>
