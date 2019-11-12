@@ -232,6 +232,7 @@ class App extends Component {
       console.log("eerrr");
     }
 
+
   }
 
 
@@ -267,8 +268,10 @@ class App extends Component {
     return countDict
   }
 
+
   render() {
     let {loaded} = this.state;
+    
     return (
       <div className="App">
         {loaded ?
