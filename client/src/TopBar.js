@@ -10,7 +10,7 @@ function TopBar() {
                     <ul className="menu" data-dropdown-menu>
                         <li className="menu-text"><div className="logoimg">xxxxxxx</div></li>
 
-                        <li className="dropdown">Select analysis timeframe:
+                        <li className="timeframecontainer">Select analysis timeframe:
                           <div className="dropdown">
                           <button onClick={myFunction} className="dropbtn">All saved songs</button>
                             <div id="myDropdown" className="dropdown-content">

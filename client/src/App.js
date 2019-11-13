@@ -226,8 +226,8 @@ class App extends Component {
     var valenceCounts = stats.splitByField(this.state.multiTracks.tracks,"valence");
     var valenceData = stats.getBucketCount(valenceCounts);
     var valenceLabels = stats.getBucketLabel(valenceCounts);
-    var colors = ["#000000", "#1A1A1A","#333333","#4D4D4D","#696969","#808080","#999999","#B0B0B0","#C9C9C9","#E3E3E3","#FFFFFF"]
-    var title = 'Valence break down of your saved songs'
+    var colors = ["#FF0000", "#FF2E2E","#FF5C5C","#FFB4B4","#FFE1E1","#D0FFD0","#8BFF8B","#5CFF5C","#00FF00", "#00A300"]
+    var title = 'Happiness break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title,"valence-breakdown");
   }
 
