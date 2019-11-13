@@ -97,7 +97,7 @@ class App extends Component {
               },
             });
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
-                    this.drawCharts();                      
+                    this.drawCharts();
                     this.sortMostDanceable();
                     this.displayTopFives();
               //remove loading loading screen
@@ -227,7 +227,7 @@ class App extends Component {
     var valenceData = stats.getBucketCount(valenceCounts);
     var valenceLabels = stats.getBucketLabel(valenceCounts);
     var colors = ["#000000", "#1A1A1A","#333333","#4D4D4D","#696969","#808080","#999999","#B0B0B0","#C9C9C9","#E3E3E3","#FFFFFF"]
-    var title = 'Valence break down of your saved songs'    
+    var title = 'Valence break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title,"valence-breakdown");
   }
 
@@ -261,7 +261,7 @@ class App extends Component {
 
   render() {
     let {loaded} = this.state;
-    
+
     return (
       <div className="App">
         {loaded ?
@@ -296,7 +296,7 @@ class App extends Component {
             </div>
             <div className="Top 5s">
                 Your Top 5 Most Valent Songs :
-                <script>formatTopFive(this.state.topFives['valence']);</script>
+                <formatTopFive topFives = {this.state.topFives['valence']}/>
             </div>
             <div className="Chart-container">
                 <canvas id="valence-breakdown" width="2" height="1"></canvas>
