@@ -8,7 +8,7 @@ import './spotistyle.css';
 
 import TopBar from './TopBar';
 import SideNav from './SideNav';
-import formatTopFive from './topFiveFormater';
+import FormatTopFive from './topFiveFormater';
 
 
 import SpotifyWebApi from 'spotify-web-api-js';
@@ -98,8 +98,8 @@ class App extends Component {
             });
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
                     this.drawCharts();
+                    this.loadTopFives();
                     this.sortMostDanceable();
-                    this.displayTopFives();
               //remove loading loading screen
             }
           });
@@ -231,13 +231,12 @@ class App extends Component {
     this.donutChart(valenceData,valenceLabels, colors,title,"valence-breakdown");
   }
 
-  displayTopFives(){
+  loadTopFives(){
   var fields = ['valence','danceability','tempo','liveness','loudness','energy','duration_ms','popularity']
   for (var f in fields){
       var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f])
-      this.state.topFives[f] = topFiveArr;
+      this.state.topFives[fields[f]] = topFiveArr;
   }
-
 }
 
 
@@ -261,7 +260,6 @@ class App extends Component {
 
   render() {
     let {loaded} = this.state;
-
     return (
       <div className="App">
         {loaded ?
@@ -296,7 +294,13 @@ class App extends Component {
             </div>
             <div className="Top 5s">
                 Your Top 5 Most Valent Songs :
-                <formatTopFive topFives = {this.state.topFives['valence']}/>
+                <FormatTopFive topFives = {this.state.topFives['valence']}/>
+                Your Top 5 Most Valent Songs :
+                <FormatTopFive topFives = {this.state.topFives['tempo']}/>
+                Your Top 5 Most Valent Songs :
+                <FormatTopFive topFives = {this.state.topFives['danceability']}/>
+
+
             </div>
             <div className="Chart-container">
                 <canvas id="valence-breakdown" width="2" height="1"></canvas>
