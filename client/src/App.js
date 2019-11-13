@@ -34,6 +34,7 @@ class App extends Component {
         albumArt: ''
       },
       loaded: false,
+
     }
   }
   getHashParams() {
@@ -92,6 +93,7 @@ class App extends Component {
               },
             });
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
+                    this.RadarAnalysis();
                     this.drawCharts();
                     this.sortMostDanceable();
             }
@@ -100,6 +102,10 @@ class App extends Component {
 
 
       })
+  }
+
+  RadarAnalysis() {
+
   }
 
 // Finds every track a user has saved
@@ -212,7 +218,7 @@ class App extends Component {
     var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
     var valenceData = this.getBucketCount(valenceCounts);
     var valenceLabels = this.getBucketLabel(valenceCounts);
-    var colors = ["#FF0000", "#FF2E2E","#FF5C5C","#FFB4B4","#FFE1E1","#D0FFD0","#8BFF8B","#5CFF5C","#00FF00", "#00A300"]
+    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
     var title = 'Happiness break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title);
     this.barChart();
@@ -292,7 +298,7 @@ class App extends Component {
         <div className="Below">
           <TopBar />
           <div className="SideNav-Wrapper">
-            <SideNav/>
+            <SideNav />
           </div>
           <div className="Content">
             <div>
