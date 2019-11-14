@@ -24,6 +24,7 @@ class App extends Component {
     this.state = {
       loggedIn: token ? true : false, // True if user is logged in
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
+      topArtists: [],
       importantInfo: { //Important information to be used by our app
         numSavedSongs: 0, //Count of songs saved by a user
         apiResponses: 0,
@@ -35,6 +36,7 @@ class App extends Component {
       },
       loaded: false,
       percentLoaded: 0,
+      timeframeChosen: "AllSaved" //AllSaved default, other options are AllListeningHistory vs. MediumTerm vs. ShortTerm
     }
   }
   getHashParams() {
@@ -49,10 +51,21 @@ class App extends Component {
     return hashParams;
   }
 
-  getNowPlaying(){
-    this.getAllSavedTracks();
-    this.donutChart()
-    this.barChart()
+  startAnalysis(){
+    if (this.state.timeframeChosen === "AllSaved") {
+      this.getAllSavedTracks(); //Get all saved tracks
+    }
+    else if (this.state.timeframeChosen === "AllListeningHistory") {
+
+    }
+    else if (this.state.timeframeChosen === "MediumTerm") {
+
+    }
+    else if (this.state.timeframeChosen === "ShortTerm") {
+
+    }
+
+
 
     spotifyApi.getMe()
       .then((response) => {
@@ -249,7 +262,7 @@ class App extends Component {
             },
             ticks: {
                 suggestedMin: 0,
-                suggestedMax: 200
+                suggestedMax: 290
             }
         }
     };
@@ -258,10 +271,11 @@ class App extends Component {
         var myBarChart = new Chart(ctx, {
           type: 'radar',
           data: {
-            labels: ['Danceability', 'Energy', 'Loudness', 'Happiness'],
+            labels: ['Danceability', 'Energy', 'Loudness', 'Happiness', 'Acousticness'],
             datasets: [{
-                backgroundColor: ["#764abc"],
-                data: [250, 100, 40, 30],
+                borderColor: ["#764abc"],
+                backgroundColor: ["#361a9c"],
+                data: [250, 100, 40, 190, 165],
             }]
           },
           options: options
@@ -276,7 +290,7 @@ class App extends Component {
     }
 
     try {
-      this.getNowPlaying();
+      this.startAnalysis();
     }
     catch(error) {
       console.log("eerrr");
@@ -327,6 +341,7 @@ class App extends Component {
         {loaded ?
           ("") :
           (<div class = "loadingscreen">
+            <br/>
             <h1>Loading {this.state.percentLoaded}%</h1>
             <h2>Please bear with us while we analyze your listening history</h2>
             <h3>This should take no longer than 30 seconds.</h3>
