@@ -222,6 +222,45 @@ class App extends Component {
     var title = 'Happiness break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title);
     this.barChart();
+    this.RadarChart();
+  }
+
+  RadarChart() {
+    var tracks = this.state.multiTracks.tracks;
+    var ctx = 'radar-chart';
+        var options = {
+            title: {
+                display: true,
+                text: "Diversity Analysis"
+            },
+            legend:{
+                display:true
+            }
+        };
+    var options = {
+        scale: {
+            angleLines: {
+                display: true
+            },
+            ticks: {
+                suggestedMin: 0,
+                suggestedMax: 200
+            }
+        }
+    };
+
+
+        var myBarChart = new Chart(ctx, {
+          type: 'radar',
+          data: {
+            labels: ['Danceability', 'Energy', 'Loudness', 'Happiness'],
+            datasets: [{
+                backgroundColor: ["#764abc"],
+                data: [250, 100, 40, 30],
+            }]
+          },
+          options: options
+        });
   }
 
 // When page first loads, check if logged in. If not, redirect to log in.
@@ -313,19 +352,10 @@ class App extends Component {
             <div className="Chart-container">
                 <canvas id="donut-chart" width="2" height="1"></canvas>
                 <canvas id="genreChart" width="400" height="200"></canvas>
-            </div>
-            <div>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
+                <canvas id="radar-chart" width="2" height="1"></canvas>
+                <br/>
+                <br/>
+                <br/>
             </div>
           </div>
 
