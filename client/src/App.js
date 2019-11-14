@@ -34,7 +34,7 @@ class App extends Component {
         albumArt: ''
       },
       loaded: false,
-
+      percentLoaded: 0,
     }
   }
   getHashParams() {
@@ -76,14 +76,19 @@ class App extends Component {
           }
         }
 
-
+        var percentSave = 0;
         // Find the Audio Features for each track, then merge with existing track object
         spotifyApi.getAudioFeaturesForTracks(trackIds)
           .then((response) => {
             for (var i = 0; i < 50; i++) {
               if (tracks[offset+i] != null) {
+                percentSave = Math.ceil((this.state.importantInfo.apiResponses / this.state.importantInfo.numSavedSongs) *100);
                 tracks[offset+i] = Object.assign(tracks[offset+i], response.audio_features[i]);
                 this.state.importantInfo.apiResponses += 1;
+                this.setState({
+                  percentLoaded: percentSave
+                });
+
               }
 
             }
@@ -322,7 +327,7 @@ class App extends Component {
         {loaded ?
           ("") :
           (<div class = "loadingscreen">
-            <h1>Loading</h1>
+            <h1>Loading {this.state.percentLoaded}%</h1>
             <h2>Please bear with us while we analyze your listening history</h2>
             <h3>This should take no longer than 30 seconds.</h3>
             <br/>
