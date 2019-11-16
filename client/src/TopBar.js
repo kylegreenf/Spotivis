@@ -2,7 +2,18 @@ import React from 'react'
 import './foundation.css'
 import './spotistyle.css'
 
-function TopBar() {
+class TopBar extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {};
+    console.log(props);
+  }
+
+  render(){
+    const { username } = this.props
+    const {profilepic} = this.props
+    console.log(this.props)
     return(
         <div className="top-bar-container" data-sticky-container>
             <div className="sticky sticy-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
@@ -22,12 +33,21 @@ function TopBar() {
                           </div>
                         </li>
                         <li className = "returnlogincontainer"><a className = "logout" href='http://localhost:8888'>Log out</a></li>
+                        <li className = "userinfocontainer"><h1>{username}</h1><img src = {profilepic['url']} className = "profilepic"></img></li>
                     </ul>
+                </div>
+                <div className="top-bar2">
+                  <div className="timeline">
+                    <a>All currently saved songs</a>
+                    <a>All listening history</a>
+                    <a>Past 6 months</a>
+                    <a>Past 4 weeks listening history</a>
+                  </div>
                 </div>
             </div>
         </div>
     )
-
+  }
 }
 
 /* When the user clicks on the button,

@@ -14,16 +14,23 @@
     top: 0;
     width: 100%;
     z-index: 1;
+    /*background-color: #764abc;*/
+    background-image: linear-gradient(#764abc, #4b2b7e);
 }
 
-.top-bar, .top-bar *{
-    background-color: #764abc;
+.top-bar, .top-bar *, .top-bar ul{
+    background-color: transparent;
     color: white;
     font-size: 125%;
 }
 
+.top-bar2, .top-bar2 *{
+  font-size: 1em;
+  /*background-color: blue;*/
+}
+
 .Below{
-  margin-top: 70px;
+  margin-top: 100px;
 }
 
 .searchInput {
@@ -44,18 +51,39 @@
 
 .returnlogincontainer {
   margin-left: auto;
-  left: 80%;
+  left: 90%;
   position: fixed;
-  font-size: 70%;
+  font-size: .6em;
   display: inline-block;
   white-space: nowrap;
   top: 15px;
+}
+
+.userinfocontainer {
+  width: 15%;
+  height: auto;
+  position: fixed;
+  left: 75%;
+  position: fixed;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.userinfocontainer * {
+  font-size: .60em;
+  display: inline;
+  padding-left: 8px;
 }
 
 .logout:hover {
   color: white;
   transform: scale(1.25) perspective(1px);
 
+}
+
+.timeline * {
+  color: white;
+  padding: 0px 20px 0px 20px;
 }
 
 .sidenav{
@@ -159,3 +187,13 @@
 .dropdown a:hover {background-color: #5D30A5;}
 
 .show {display: block;}
+
+.profilepic{
+  border-radius: 50%;
+  max-width: 22%;
+  height: auto;
+}
+
+.menu{
+  background-color: transparent;
+}
