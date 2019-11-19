@@ -30,14 +30,14 @@ class App extends Component {
         numSavedSongs: 0, //Count of songs saved by a user
         display_name: null,
       },
-      apiResponses: 0,
       mostDanceableSong: {
         name: 'Not Checked',
         albumArt: ''
       },
+      apiResponses: 0,
       loaded: false,
       percentLoaded: 0,
-      timeframeChosen: "AllSaved" //AllSaved default, other options are AllListeningHistory vs. MediumTerm vs. ShortTerm
+      timeframeChosen: "AllSaved", //AllSaved default, other options are last50 vs. last250 vs. favoritegenre
     }
   }
   getHashParams() {
@@ -54,15 +54,16 @@ class App extends Component {
 
   startAnalysis(){
     if (this.state.timeframeChosen === "AllSaved") {
-      this.getAllSavedTracks(); //Get all saved tracks
+      this.getAllSavedTracks(0); //Get all saved tracks
     }
-    else if (this.state.timeframeChosen === "AllListeningHistory") {
-
+    else if (this.state.timeframeChosen === "last50") {
+      this.getAllSavedTracks(50); //Get 50 tracks
     }
-    else if (this.state.timeframeChosen === "MediumTerm") {
-
+    else if (this.state.timeframeChosen === "last250") {
+      this.getAllSavedTracks(250); //get 250 saved
     }
-    else if (this.state.timeframeChosen === "ShortTerm") {
+    else if (this.state.timeframeChosen === "favoritegenre") {
+      this.getAllSavedTracks(-1); //analyze favoritegenre
 
     }
 
@@ -134,19 +135,31 @@ class App extends Component {
   }
 
 // Finds every track a user has saved
-  getAllSavedTracks() {
+  getAllSavedTracks(trackcounttofind) {
     spotifyApi.getMySavedTracks()
       .then((response) => {
+        var totalSaved = response.total;
+        //Code for track count = all tracks means trackcounttofind is 0
+        if (trackcounttofind === 50) {
+          if (totalSaved > 50) {
+            totalSaved = 50;
+          }
+        }
+        else if (trackcounttofind === 250) {
+          if (totalSaved > 250) {
+            totalSaved = 250;
+          }
+        }
+
         this.setState({
           importantInfo: {
-            numSavedSongs: response.total,
+            numSavedSongs: totalSaved,
           },
           apiResponses: 0
         });
-        var totalSaved = this.state.importantInfo.numSavedSongs;
         var minimumTotalCalls = Math.ceil(totalSaved / 50);
         var offset = 0;
-        var tracks = new Array();
+        var tracks = [];
 
         for (var i = 0; i < minimumTotalCalls; i++) {
           this.getAllSavedHelper(offset, tracks);
@@ -178,9 +191,9 @@ class App extends Component {
  barChart(dataArr, LabelsArr) {
     var ctx = 'genreChart';
 
-    var dataArr = [4, 12, 52, 2, 12]
-    var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"]
-    var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
+    var dataArr = [4, 12, 52, 2, 12];
+    var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"];
+    var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"];
     var options = {
         title: {
             display: true,
@@ -212,7 +225,6 @@ class App extends Component {
  }
 
   donutChart(dataArr, labelsArr, colorsArr, title) {
-    var tracks = this.state.multiTracks.tracks;
     var ctx = 'donut-chart';
         var options = {
             title: {
@@ -251,7 +263,6 @@ class App extends Component {
   }
 
   RadarChart() {
-    var tracks = this.state.multiTracks.tracks;
     var ctx = 'radar-chart';
         var options = {
             title: {
@@ -324,7 +335,6 @@ class App extends Component {
   }
 
   splitByValence(tracks){
-    var totalLen = tracks.length
     var countDict = {}
     for (var i in tracks){
         var val = tracks[i].valence
@@ -347,14 +357,14 @@ class App extends Component {
       <div className="App">
         {loaded ?
           ("") :
-          (<div class = "loadingscreen">
+          (<div className = "loadingscreen">
             <br/>
             <h1>Loading {this.state.percentLoaded}%</h1>
             <h2>Please bear with us while we analyze your listening history</h2>
             <h3>This should take no longer than 30 seconds.</h3>
             <br/>
-            <div class="item">
-				        <div class="loader09">
+            <div className="item">
+				        <div className="loader09">
                 </div>
 			      </div>
           </div>
@@ -378,7 +388,7 @@ class App extends Component {
               <br/>
               <hr/>
             </div>
-            <div>
+            <div id = "top5">
               <h2>Top 5's:</h2>
               Your most danceable song: {this.state.mostDanceableSong.name}
               <br/>

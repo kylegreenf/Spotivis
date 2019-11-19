@@ -19,16 +19,7 @@ class TopBar extends React.Component{
                     <ul className="menu" data-dropdown-menu>
                         <li className="menu-text"><div className="logoimg">xxxxxxx</div></li>
 
-                        <li className="timeframecontainer">Select analysis timeframe:
-                          <div className="dropdown">
-                          <button onClick={myFunction} className="dropbtn">All saved songs</button>
-                            <div id="myDropdown" className="dropdown-content">
-                              <a href="#home">All currently saved songs</a>
-                              <a href="#about">All listening history</a>
-                              <a href="#about">Past 6 month listening history</a>
-                              <a href="#contact">Past 4 weeks listening history</a>
-                            </div>
-                          </div>
+                        <li className="timeframecontainer">Select which of your listening history we should analyze:
                         </li>
                         <li className = "returnlogincontainer"><a className = "logout" href='http://localhost:8888'>Log out</a></li>
                         <li className = "userinfocontainer"><h1>{username}</h1><img src = {profilepic} alt = "" className = "profilepic"></img></li>
@@ -37,9 +28,9 @@ class TopBar extends React.Component{
                 <div className="top-bar2">
                   <div className="timeline">
                     <a>All currently saved songs</a>
-                    <a>All listening history</a>
-                    <a>Past 6 months</a>
-                    <a>Past 4 weeks listening history</a>
+                    <a>Most recent 50 songs</a>
+                    <a>Most recent 250 songs</a>
+                    <a>Music saved from my favorite genre</a>
                   </div>
                 </div>
             </div>
