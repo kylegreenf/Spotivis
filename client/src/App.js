@@ -74,12 +74,12 @@ class App extends Component {
         if (!!response.display_name) {
           this.setState({username: response.display_name});
         }
-        if(!!response.images) {
-          console.log(response);
+        if(!!response.images && response.images.length !== 0) {
+          //console.log(response);
           this.setState({profilepic: response.images[0].url});
         }
-        if (response.images === null) {
-          this.setState({profilepic: null})
+        else {
+          this.setState({profilepic: "https://icon-library.net/images/generic-profile-icon/generic-profile-icon-8.jpg"})
         }
       });
   }
