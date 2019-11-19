@@ -9,6 +9,7 @@ function SideNav() {
               <input className = "searchInput" type="text" id="myInput" onKeyUp={searchGraphs} placeholder="Search for graphs">
               </input>
               <ul id="myMenu">
+                <li className = "graphdropdown"><a className = "sideNavParent" href="#">The Basics</a></li>
                 <li className = "graphdropdown"><a className = "sideNavParent" href="#">Top 5</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Artists</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Songs</a></li>

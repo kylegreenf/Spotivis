@@ -379,18 +379,24 @@ class App extends Component {
               <hr/>
             </div>
             <div>
+              <h2>Top 5's:</h2>
               Your most danceable song: {this.state.mostDanceableSong.name}
-            </div>
-            <div>
+              <br/>
               <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
+              <hr/>
             </div>
             <div className="Chart-container">
+              <h2>Genre Breakdown</h2>
                 <canvas id="donut-chart" width="2" height="1"></canvas>
                 <canvas id="genreChart" width="400" height="200"></canvas>
                 <canvas id="radar-chart" width="2" height="1"></canvas>
                 <br/>
                 <br/>
-                <br/>
+              <hr/>
+            </div>
+            <div>
+              <h2>Averages</h2>
+              <hr/>
             </div>
           </div>
 
