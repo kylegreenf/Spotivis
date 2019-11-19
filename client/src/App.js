@@ -55,7 +55,7 @@ class App extends Component {
 
   startAnalysis(){
     if (this.state.timeframeChosen === "AllSaved") {
-      this.getAllSavedTracks(0); //Get all saved tracks
+      this.getAllSavedTracks(2500); //Get all saved tracks
     }
     else if (this.state.timeframeChosen === "last50") {
       this.getAllSavedTracks(50); //Get 50 tracks
