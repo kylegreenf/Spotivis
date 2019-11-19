@@ -28,9 +28,9 @@ class App extends Component {
       topArtists: [],
       importantInfo: { //Important information to be used by our app
         numSavedSongs: 0, //Count of songs saved by a user
-        apiResponses: 0,
         display_name: null,
       },
+      apiResponses: 0,
       mostDanceableSong: {
         name: 'Not Checked',
         albumArt: ''
@@ -102,13 +102,9 @@ class App extends Component {
           .then((response) => {
             for (var i = 0; i < 50; i++) {
               if (tracks[offset+i] != null) {
-                percentSave = Math.ceil((this.state.importantInfo.apiResponses / this.state.importantInfo.numSavedSongs) *100);
+                percentSave = Math.ceil((this.state.apiResponses / this.state.importantInfo.numSavedSongs) *100);
                 tracks[offset+i] = Object.assign(tracks[offset+i], response.audio_features[i]);
-                this.setState({
-                  importantInfo: {
-                      apiResponses: this.state.importantInfo.apiResponses + 1
-                    }
-                });
+                this.setState({ apiResponses: this.state.apiResponses + 1 })
                 this.setState({
                   percentLoaded: percentSave
                 });
@@ -121,7 +117,7 @@ class App extends Component {
                 tracks: tracks
               },
             });
-            if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
+            if (this.state.apiResponses === this.state.importantInfo.numSavedSongs) {
                     this.RadarAnalysis();
                     this.drawCharts();
                     this.sortMostDanceable();
@@ -144,8 +140,8 @@ class App extends Component {
         this.setState({
           importantInfo: {
             numSavedSongs: response.total,
-            apiResponses: 0,
-          }
+          },
+          apiResponses: 0
         });
         var totalSaved = this.state.importantInfo.numSavedSongs;
         var minimumTotalCalls = Math.ceil(totalSaved / 50);
