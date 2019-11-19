@@ -71,10 +71,14 @@ class App extends Component {
     spotifyApi.getMe()
       .then((response) => {
         if (!!response.display_name) {
-          this.setState({username: response.display_name})
+          this.setState({username: response.display_name});
         }
         if(!!response.images) {
-          this.setState({profilepic: response.images[0]})
+          this.setState({profilepic: response.images[0]});
+          console.log(response);
+        }
+        if (response.images === null) {
+          this.setState({profilepic: null})
         }
       });
   }

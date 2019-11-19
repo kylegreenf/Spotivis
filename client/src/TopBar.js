@@ -13,7 +13,6 @@ class TopBar extends React.Component{
   render(){
     const { username } = this.props
     const {profilepic} = this.props
-    console.log(this.props)
     return(
         <div className="top-bar-container" data-sticky-container>
             <div className="sticky sticy-topbar" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
@@ -33,7 +32,7 @@ class TopBar extends React.Component{
                           </div>
                         </li>
                         <li className = "returnlogincontainer"><a className = "logout" href='http://localhost:8888'>Log out</a></li>
-                        <li className = "userinfocontainer"><h1>{username}</h1><img src = {profilepic['url']} className = "profilepic"></img></li>
+                        <li className = "userinfocontainer"><h1>{username}</h1><img src = {profilepic} className = "profilepic"></img></li>
                     </ul>
                 </div>
                 <div className="top-bar2">
