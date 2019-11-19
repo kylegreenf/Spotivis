@@ -11,17 +11,18 @@ import SideNav from './SideNav';
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 var Chart = require('chart.js');
-var username = "lol";
 
 class App extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     const params = this.getHashParams();
     const token = params.access_token;
     if (token) {
       spotifyApi.setAccessToken(token);
     }
     this.state = {
+      profilepic : {},
+      username : "",
       loggedIn: token ? true : false, // True if user is logged in
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
       topArtists: [],
@@ -69,8 +70,11 @@ class App extends Component {
 
     spotifyApi.getMe()
       .then((response) => {
-        if (response.display_name != null) {
-          username = response.display_name
+        if (!!response.display_name) {
+          this.setState({username: response.display_name})
+        }
+        if(!!response.images) {
+          this.setState({profilepic: response.images[0]})
         }
       });
   }
@@ -355,7 +359,7 @@ class App extends Component {
 
 
         <div className="Below">
-          <TopBar />
+          <TopBar username = {this.state.username} profilepic = {this.state.profilepic}/>
           <div className="SideNav-Wrapper">
             <SideNav />
           </div>
