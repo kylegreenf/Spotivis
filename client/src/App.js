@@ -27,8 +27,9 @@ class App extends Component {
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
       topArtists: [],
       importantInfo: { //Important information to be used by our app
-        numSavedSongs: 0, //Count of songs saved by a user
+        numToAnlayzeSavedSongs: 0, //Count of songs saved by a user
         display_name: null,
+        numSavedSongs: 0,
       },
       mostDanceableSong: {
         name: 'Not Checked',
@@ -62,9 +63,11 @@ class App extends Component {
     else if (this.state.timeframeChosen === "last250") {
       this.getAllSavedTracks(250); //get 250 saved
     }
+    else if (this.state.timeframeChosen === "last2500") {
+      this.getAllSavedTracks(2500); //get 2500 saved
+    }
     else if (this.state.timeframeChosen === "favoritegenre") {
       this.getAllSavedTracks(-1); //analyze favoritegenre
-
     }
 
 
@@ -104,7 +107,7 @@ class App extends Component {
           .then((response) => {
             for (var i = 0; i < 50; i++) {
               if (tracks[offset+i] != null) {
-                percentSave = Math.ceil((this.state.apiResponses / this.state.importantInfo.numSavedSongs) *100);
+                percentSave = Math.ceil((this.state.apiResponses / this.state.importantInfo.numToAnlayzeSavedSongs) *100);
                 tracks[offset+i] = Object.assign(tracks[offset+i], response.audio_features[i]);
                 this.setState({ apiResponses: this.state.apiResponses + 1 })
                 this.setState({
@@ -119,12 +122,12 @@ class App extends Component {
                 tracks: tracks
               },
             });
-            if (this.state.apiResponses === this.state.importantInfo.numSavedSongs) {
+            if (this.state.apiResponses === this.state.importantInfo.numToAnlayzeSavedSongs) {
                     this.RadarAnalysis();
                     this.drawCharts();
                     this.sortMostDanceable();
             }
-          });
+          }).catch(e => {console.log(e);});
 
 
 
@@ -140,6 +143,7 @@ class App extends Component {
     spotifyApi.getMySavedTracks()
       .then((response) => {
         var totalSaved = response.total;
+        var realTotalSaved = response.total;
         //Code for track count = all tracks means trackcounttofind is 0
         if (trackcounttofind === 50) {
           if (totalSaved > 50) {
@@ -151,10 +155,16 @@ class App extends Component {
             totalSaved = 250;
           }
         }
+        else if (trackcounttofind === 2500) {
+          if (totalSaved > 2500) {
+            totalSaved = 2500;
+          }
+        }
 
         this.setState({
           importantInfo: {
-            numSavedSongs: totalSaved,
+            numToAnlayzeSavedSongs: totalSaved,
+            numSavedSongs: realTotalSaved,
           },
           apiResponses: 0
         });
@@ -180,7 +190,7 @@ class App extends Component {
     this.setState({
       mostDanceableSong: {
           name: tracks[tracks.length-1].name,
-          albumArt: tracks[this.state.importantInfo.numSavedSongs-1].album.images[0].url,
+          albumArt: tracks[this.state.importantInfo.numToAnlayzeSavedSongs-1].album.images[0].url,
         }
     });
     this.setState({
@@ -256,7 +266,8 @@ class App extends Component {
     var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
     var valenceData = this.getBucketCount(valenceCounts);
     var valenceLabels = this.getBucketLabel(valenceCounts);
-    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
+    var colors = ["#412967", "#4C3078","#764ABC","#8E6AC8","#B49CDA", "#D9CDEC"]
+    //    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
     var title = 'Happiness break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title);
     this.barChart();
@@ -328,10 +339,10 @@ class App extends Component {
   }
 
   getBucketLabel(dict){
-    var valArr = [];
-    for (var key in dict){
-        valArr.push(key.toString() + "-" +(parseInt(key)+10))
-    }
+    var valArr = ["Negative emotions", "Leaning negative", "Neither happy nor sad", "Leaning positive", "Very positive emotions"];
+    /*for (var key in dict){
+        valArr.push(key.toString() + "-" +(parseInt(key)+20))
+    }*/
     return valArr;
   }
 
@@ -339,7 +350,7 @@ class App extends Component {
     var countDict = {}
     for (var i in tracks){
         var val = tracks[i].valence
-        val = (Math.floor(val*10))*10
+        val = (Math.floor(val*5))*20
 
         if(val in countDict){
             countDict[val] += 1
@@ -386,6 +397,7 @@ class App extends Component {
             <div>
               <h2>The Basics:</h2>
               <h5>You have saved {this.state.importantInfo.numSavedSongs} songs.</h5>
+              <h5>We will be analyzing your top {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>
               <br/>
               <hr/>
             </div>
