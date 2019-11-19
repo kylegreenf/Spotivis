@@ -7,7 +7,6 @@ class TopBar extends React.Component{
   constructor(props){
     super(props);
     this.state = {};
-    console.log(props);
   }
 
   render(){
@@ -32,7 +31,7 @@ class TopBar extends React.Component{
                           </div>
                         </li>
                         <li className = "returnlogincontainer"><a className = "logout" href='http://localhost:8888'>Log out</a></li>
-                        <li className = "userinfocontainer"><h1>{username}</h1><img src = {profilepic} className = "profilepic"></img></li>
+                        <li className = "userinfocontainer"><h1>{username}</h1><img src = {profilepic} alt = "" className = "profilepic"></img></li>
                     </ul>
                 </div>
                 <div className="top-bar2">

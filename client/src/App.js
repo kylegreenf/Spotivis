@@ -75,7 +75,6 @@ class App extends Component {
         }
         if(!!response.images) {
           this.setState({profilepic: response.images[0]});
-          console.log(response);
         }
         if (response.images === null) {
           this.setState({profilepic: null})
@@ -105,7 +104,11 @@ class App extends Component {
               if (tracks[offset+i] != null) {
                 percentSave = Math.ceil((this.state.importantInfo.apiResponses / this.state.importantInfo.numSavedSongs) *100);
                 tracks[offset+i] = Object.assign(tracks[offset+i], response.audio_features[i]);
-                this.state.importantInfo.apiResponses += 1;
+                this.setState({
+                  importantInfo: {
+                      apiResponses: this.state.importantInfo.apiResponses + 1
+                    }
+                });
                 this.setState({
                   percentLoaded: percentSave
                 });
@@ -369,7 +372,15 @@ class App extends Component {
           </div>
           <div className="Content">
             <div>
-              You have saved: {this.state.importantInfo.numSavedSongs}
+              <h1>Welcome to Spotiviz!</h1>
+              <h3>Please select how far back we should analyze your music at the top.</h3>
+              <hr/>
+            </div>
+            <div>
+              <h2>The Basics:</h2>
+              <h5>You have saved {this.state.importantInfo.numSavedSongs} songs.</h5>
+              <br/>
+              <hr/>
             </div>
             <div>
               Your most danceable song: {this.state.mostDanceableSong.name}
