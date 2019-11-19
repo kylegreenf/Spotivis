@@ -75,7 +75,8 @@ class App extends Component {
           this.setState({username: response.display_name});
         }
         if(!!response.images) {
-          this.setState({profilepic: response.images[0]});
+          console.log(response);
+          this.setState({profilepic: response.images[0].url});
         }
         if (response.images === null) {
           this.setState({profilepic: null})
