@@ -49,6 +49,13 @@ div, button {
   padding-top: 24px;
   font-family: Montserrat;
 }
+.topfives {
+  align: center;
+  width: 50%;
+  margin: auto;
+
+}
+
 
 .loader09 {
   width: 10px;

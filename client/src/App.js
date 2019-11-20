@@ -39,6 +39,7 @@ class App extends Component {
       },
       topFives: {},
       loaded: false,
+
     }
   }
   getHashParams() {
@@ -97,6 +98,7 @@ class App extends Component {
               },
             });
             if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
+                    this.RadarAnalysis();
                     this.drawCharts();
                     this.loadTopFives();
                     this.sortMostDanceable();
@@ -107,6 +109,10 @@ class App extends Component {
 
 
       })
+  }
+
+  RadarAnalysis() {
+
   }
 
 // Finds every track a user has saved
@@ -226,7 +232,8 @@ class App extends Component {
     var valenceCounts = stats.splitByField(this.state.multiTracks.tracks,"valence");
     var valenceData = stats.getBucketCount(valenceCounts);
     var valenceLabels = stats.getBucketLabel(valenceCounts);
-    var colors = ["#FF0000", "#FF2E2E","#FF5C5C","#FFB4B4","#FFE1E1","#D0FFD0","#8BFF8B","#5CFF5C","#00FF00", "#00A300"]
+    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
+
     var title = 'Happiness break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title,"valence-breakdown");
   }
@@ -280,7 +287,7 @@ class App extends Component {
         <div className="Below">
           <TopBar />
           <div className="SideNav-Wrapper">
-            <SideNav/>
+            <SideNav />
           </div>
           <div className="Content">
             <div>
@@ -292,7 +299,7 @@ class App extends Component {
             <div>
               <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
             </div>
-            <div className="Top 5s">
+            <div className="topfives">
                 Your Top 5 Most Valent Songs :
                 <FormatTopFive topFives = {this.state.topFives['valence']}/>
                 Your Top 5 Most Valent Songs :
