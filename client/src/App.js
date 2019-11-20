@@ -439,7 +439,7 @@ class App extends Component {
               <h5>You have saved {this.state.importantInfo.numSavedSongs} songs.</h5>
               {error ?
               (<h5>There was an error on Spotify's end. We are able to analyze {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>) :
-              (<h5>We will be analyzing your top {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>)}
+              (<h5>We will be analyzing your most recent {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>)}
               <h5>Time Frame Chosen: {this.state.timeframeChosen}</h5>
               <br/>
               <hr/>
