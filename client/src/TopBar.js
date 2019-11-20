@@ -6,8 +6,33 @@ class TopBar extends React.Component{
 
   constructor(props){
     super(props);
-    this.state = {};
+    this.state = {
+      timeframeChosen : ""
+    };
+    this.update = this.update.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+;
   }
+
+  update = () => {
+    console.log("aaaaaa");
+    this.props.timelineUpdate("test");
+  }
+
+
+  handleClick = (e) =>{
+    e.preventDefault();
+    if(e.target.matches('.timeframe-unselected')){
+      var selected = document.getElementsByClassName("timeframe-selected");
+      var i;
+      for(i = 0; i < selected.length; i++){
+        selected[i].className = "timeframe-unselected";
+      }
+      e.target.className = "timeframe-selected";
+      this.props.timelineUpdate(e.target.id);
+    }
+  }
+
 
   render(){
     const { username } = this.props
@@ -27,10 +52,10 @@ class TopBar extends React.Component{
                 </div>
                 <div className="top-bar2">
                   <div className="timeline">
-                    <a>All currently saved songs</a>
-                    <a>Most recent 50 songs</a>
-                    <a>Most recent 250 songs</a>
-                    <a>Music saved from my favorite genre</a>
+                    <a id="AllSaved" className="timeframe-selected" onClick={this.handleClick}>All currently saved songs</a>
+                    <a id="last50" className="timeframe-unselected" onClick={this.handleClick}>Most recent 50 songs</a>
+                    <a id="last250" className="timeframe-unselected" onClick={this.handleClick}>Most recent 250 songs</a>
+                    <a id="favoritegenre" className="timeframe-unselected" onClick={this.handleClick}>Music saved from my favorite genre</a>
                   </div>
                 </div>
             </div>
@@ -38,6 +63,8 @@ class TopBar extends React.Component{
     )
   }
 }
+
+
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */

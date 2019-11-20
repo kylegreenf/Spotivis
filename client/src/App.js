@@ -361,6 +361,12 @@ class App extends Component {
     return countDict
   }
 
+  timelineUpdate = (time) => {
+    this.setState({
+      timeframeChosen : time
+    })
+  }
+
 
   render() {
     let {loaded} = this.state;
@@ -384,7 +390,7 @@ class App extends Component {
 
 
         <div className="Below">
-          <TopBar username = {this.state.username} profilepic = {this.state.profilepic}/>
+          <TopBar username = {this.state.username} profilepic = {this.state.profilepic} timelineUpdate = {this.timelineUpdate}/>
           <div className="SideNav-Wrapper">
             <SideNav />
           </div>
@@ -398,6 +404,7 @@ class App extends Component {
               <h2>The Basics:</h2>
               <h5>You have saved {this.state.importantInfo.numSavedSongs} songs.</h5>
               <h5>We will be analyzing your top {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>
+              <h5>Time Frame Chosen: {this.state.timeframeChosen}</h5>
               <br/>
               <hr/>
             </div>
