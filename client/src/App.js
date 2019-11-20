@@ -127,7 +127,15 @@ class App extends Component {
                     this.drawCharts();
                     this.sortMostDanceable();
             }
-          }).catch(e => {console.log(e);});
+          }).catch(e => {
+            this.setState({
+                    loaded: true,
+
+                  });
+                  this.RadarAnalysis();
+                  this.drawCharts();
+                  this.sortMostDanceable();
+                });
 
 
 
@@ -268,7 +276,7 @@ class App extends Component {
     var valenceLabels = this.getBucketLabel(valenceCounts);
     var colors = ["#412967","#764ABC","#8E6AC8","#B49CDA", "#D9CDEC"]
     //    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
-    var title = 'Happiness break down of your saved songs'
+    var title = 'Emotional break down of your saved songs'
     this.donutChart(valenceData,valenceLabels, colors,title);
     this.barChart();
     this.RadarChart();
@@ -339,7 +347,7 @@ class App extends Component {
   }
 
   getBucketLabel(dict){
-    var valArr = ["Negative emotions", "Leaning negative", "Neither happy nor sad", "Leaning positive", "Very positive emotions"];
+    var valArr = ["Negative emotions", "Leaning negative", "Neutral", "Leaning positive", "Very positive emotions"];
     /*for (var key in dict){
         valArr.push(key.toString() + "-" +(parseInt(key)+20))
     }*/
