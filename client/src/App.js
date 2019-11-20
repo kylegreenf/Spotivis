@@ -334,6 +334,7 @@ class App extends Component {
       loaded: false,
     });
 
+
     try {
       this.startAnalysis();
     }
