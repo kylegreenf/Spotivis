@@ -15,31 +15,37 @@ import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 var stats = require('./statsHelper');
 var Chart = require('chart.js');
-var username = "lol";
 
 class App extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     const params = this.getHashParams();
     const token = params.access_token;
     if (token) {
       spotifyApi.setAccessToken(token);
     }
     this.state = {
+      profilepic : {},
+      username : "",
       loggedIn: token ? true : false, // True if user is logged in
       multiTracks: {tracks: [] }, // Array to hold all saved tracks + info as object
+      topArtists: [],
       importantInfo: { //Important information to be used by our app
-        numSavedSongs: 0, //Count of songs saved by a user
-        apiResponses: 0,
+        numToAnlayzeSavedSongs: 0, //Count of songs saved by a user
         display_name: null,
+        numSavedSongs: 0,
       },
       mostDanceableSong: {
         name: 'Not Checked',
         albumArt: ''
       },
       topFives: {},
+      apiResponses: 0,
       loaded: false,
-
+      percentLoaded: 0,
+      timeframeChosen: "AllSaved", //AllSaved default, other options are last50 vs. last250 vs. favoritegenre
+      prevtimeframeChosen: "AllSaved",
+      error: false,
     }
   }
   getHashParams() {
@@ -54,15 +60,36 @@ class App extends Component {
     return hashParams;
   }
 
-  getNowPlaying(){
-    this.getAllSavedTracks();
-    this.donutChart()
-    this.barChart()
+  startAnalysis(){
+    if (this.state.timeframeChosen === "AllSaved") {
+      this.getAllSavedTracks(2000); //Get all saved tracks
+    }
+    else if (this.state.timeframeChosen === "last50") {
+      this.getAllSavedTracks(50); //Get 50 tracks
+    }
+    else if (this.state.timeframeChosen === "last250") {
+      this.getAllSavedTracks(250); //get 250 saved
+    }
+    else if (this.state.timeframeChosen === "last2000") {
+      this.getAllSavedTracks(2000); //get 2000 saved
+    }
+    else if (this.state.timeframeChosen === "favoritegenre") {
+      this.getAllSavedTracks(-1); //analyze favoritegenre
+    }
+
+
 
     spotifyApi.getMe()
       .then((response) => {
-        if (response.display_name != null) {
-          username = response.display_name
+        if (!!response.display_name) {
+          this.setState({username: response.display_name});
+        }
+        if(!!response.images && response.images.length !== 0) {
+          //console.log(response);
+          this.setState({profilepic: response.images[0].url});
+        }
+        else {
+          this.setState({profilepic: "https://icon-library.net/images/generic-profile-icon/generic-profile-icon-8.jpg"})
         }
       });
   }
@@ -81,14 +108,19 @@ class App extends Component {
           }
         }
 
-
+        var percentSave = 0;
         // Find the Audio Features for each track, then merge with existing track object
         spotifyApi.getAudioFeaturesForTracks(trackIds)
           .then((response) => {
             for (var i = 0; i < 50; i++) {
               if (tracks[offset+i] != null) {
+                percentSave = Math.ceil((this.state.apiResponses / this.state.importantInfo.numToAnlayzeSavedSongs) *100);
                 tracks[offset+i] = Object.assign(tracks[offset+i], response.audio_features[i]);
-                this.state.importantInfo.apiResponses += 1;
+                this.setState({ apiResponses: this.state.apiResponses + 1 })
+                this.setState({
+                  percentLoaded: percentSave
+                });
+
               }
 
             }
@@ -97,14 +129,25 @@ class App extends Component {
                 tracks: tracks
               },
             });
-            if (this.state.importantInfo.apiResponses === this.state.importantInfo.numSavedSongs) {
+            if (this.state.apiResponses === this.state.importantInfo.numToAnlayzeSavedSongs) {
                     this.RadarAnalysis();
                     this.drawCharts();
                     this.loadTopFives();
                     this.sortMostDanceable();
               //remove loading loading screen
             }
-          });
+          }).catch(e => {
+            this.setState({
+                    loaded: true,
+                    importantInfo: {
+                      numToAnlayzeSavedSongs: this.state.apiResponses,
+                    },
+                    error: true,
+                  });
+                  this.RadarAnalysis();
+                  this.drawCharts();
+                  this.sortMostDanceable();
+                });
 
 
 
@@ -116,26 +159,47 @@ class App extends Component {
   }
 
 // Finds every track a user has saved
-  getAllSavedTracks() {
+  getAllSavedTracks(trackcounttofind) {
     spotifyApi.getMySavedTracks()
       .then((response) => {
+        var totalSaved = response.total;
+        var realTotalSaved = response.total;
+        //Code for track count = all tracks means trackcounttofind is 0
+        if (trackcounttofind === 50) {
+          if (totalSaved > 50) {
+            totalSaved = 50;
+          }
+        }
+        else if (trackcounttofind === 250) {
+          if (totalSaved > 250) {
+            totalSaved = 250;
+          }
+        }
+        else if (trackcounttofind === 2000) {
+          if (totalSaved > 2000) {
+            totalSaved = 2000;
+          }
+        }
+
         this.setState({
           importantInfo: {
-            numSavedSongs: response.total,
-            apiResponses: 0,
-          }
+            numToAnlayzeSavedSongs: totalSaved,
+            numSavedSongs: realTotalSaved,
+          },
+          apiResponses: 0
         });
-        var totalSaved = this.state.importantInfo.numSavedSongs;
         var minimumTotalCalls = Math.ceil(totalSaved / 50);
         var offset = 0;
-        var tracks = new Array();
+        var tracks = [];
 
         for (var i = 0; i < minimumTotalCalls; i++) {
           this.getAllSavedHelper(offset, tracks);
           offset+= 50;
         }
 
-      }).catch(e => {console.log("xx");});
+      }).catch(e => { this.setState({
+                          error: true,
+                        });});
 
 
 
@@ -148,7 +212,7 @@ class App extends Component {
     this.setState({
       mostDanceableSong: {
           name: tracks[tracks.length-1].name,
-          albumArt: tracks[this.state.importantInfo.numSavedSongs-1].album.images[0].url,
+          albumArt: tracks[this.state.importantInfo.numToAnlayzeSavedSongs-1].album.images[0].url,
         }
     });
     this.setState({
@@ -160,9 +224,9 @@ class App extends Component {
  barChart(dataArr, LabelsArr) {
     var ctx = 'genreChart';
 
-    var dataArr = [4, 12, 52, 2, 12]
-    var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"]
-    var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
+    var dataArr = [4, 12, 52, 2, 12];
+    var labelsArr = ["Rock", "Hip hop", "Blues", "Metal", "Jazz"];
+    var colorsArr = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"];
     var options = {
         title: {
             display: true,
@@ -229,13 +293,53 @@ class App extends Component {
 
 
   drawCharts(){
-    var valenceCounts = stats.splitByField(this.state.multiTracks.tracks,"valence");
-    var valenceData = stats.getBucketCount(valenceCounts);
-    var valenceLabels = stats.getBucketLabel(valenceCounts);
-    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
+    var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
+    var valenceData = this.getBucketCount(valenceCounts);
+    var valenceLabels = this.getBucketLabel(valenceCounts);
+    var colors = ["#412967","#764ABC","#8E6AC8","#B49CDA", "#D9CDEC"]
+    //    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
+    var title = 'Emotional break down of your saved songs'
+    this.donutChart(valenceData,valenceLabels, colors,title);
+    this.barChart();
+    this.RadarChart();
+  }
 
-    var title = 'Happiness break down of your saved songs'
-    this.donutChart(valenceData,valenceLabels, colors,title,"valence-breakdown");
+  RadarChart() {
+    var ctx = 'radar-chart';
+        var options = {
+            title: {
+                display: true,
+                text: "Diversity Analysis"
+            },
+            legend:{
+                display:true
+            }
+        };
+    var options = {
+        scale: {
+            angleLines: {
+                display: true
+            },
+            ticks: {
+                suggestedMin: 0,
+                suggestedMax: 290
+            }
+        }
+    };
+
+
+        var myBarChart = new Chart(ctx, {
+          type: 'radar',
+          data: {
+            labels: ['Danceability', 'Energy', 'Loudness', 'Happiness', 'Acousticness'],
+            datasets: [{
+                borderColor: ["#764abc"],
+                backgroundColor: ["#361a9c"],
+                data: [250, 100, 40, 190, 165],
+            }]
+          },
+          options: options
+        });
   }
 
   loadTopFives(){
@@ -253,31 +357,90 @@ class App extends Component {
     if (this.state.loggedIn === false) {
       window.location.replace("http://localhost:8888/");
     }
+    this.setState({
+      percentLoaded: 0,
+      loaded: false,
+      error: false,
+    });
+
 
     try {
-      this.getNowPlaying();
+      this.startAnalysis();
     }
     catch(error) {
-      console.log("eerrr");
+      this.setState({
+                         error: true,
+                       });
+    }
+  }
+
+
+  componentDidUpdate(prevProps) {
+    if (this.state.prevtimeframeChosen !== this.state.timeframeChosen) {
+      this.setState({
+        prevtimeframeChosen: this.state.timeframeChosen
+      });
+      this.componentDidMount();
     }
 
+  }
 
+  getBucketCount(dict){
+    var valArr = [];
+    for (var key in dict){
+        valArr.push(dict[key])
+    }
+    return valArr;
+  }
+
+  getBucketLabel(dict){
+    var valArr = ["Negative emotions", "Leaning negative", "Neutral", "Leaning positive", "Very positive emotions"];
+    /*for (var key in dict){
+        valArr.push(key.toString() + "-" +(parseInt(key)+20))
+    }*/
+    return valArr;
+  }
+
+  splitByValence(tracks){
+    var countDict = {}
+    for (var i in tracks){
+        var val = tracks[i].valence
+        val = (Math.floor(val*5))*20
+
+        if(val in countDict){
+            countDict[val] += 1
+        }else{
+            countDict[val] = 1
+        }
+    }
+    return countDict
+  }
+
+  timelineUpdate = (time) => {
+    this.setState({
+      timeframeChosen : time
+    })
   }
 
 
   render() {
     let {loaded} = this.state;
+    let {error} = this.state;
     return (
       <div className="App">
         {loaded ?
           ("") :
-          (<div class = "loadingscreen">
-            <h1>Loading</h1>
+          (<div className = "loadingscreen">
+            <br/>
+            <h1>Loading {this.state.percentLoaded}%</h1>
             <h2>Please bear with us while we analyze your listening history</h2>
             <h3>This should take no longer than 30 seconds.</h3>
+            {error ?
+            (<h1>There was an error on Spotify's end. Please try again later.</h1>) :
+            ("")}
             <br/>
-            <div class="item">
-				        <div class="loader09">
+            <div className="item">
+				        <div className="loader09">
                 </div>
 			      </div>
           </div>
@@ -285,45 +448,53 @@ class App extends Component {
 
 
         <div className="Below">
-          <TopBar />
+          <TopBar username = {this.state.username} profilepic = {this.state.profilepic} timelineUpdate = {this.timelineUpdate}/>
           <div className="SideNav-Wrapper">
             <SideNav />
           </div>
           <div className="Content">
             <div>
-              You have saved: {this.state.importantInfo.numSavedSongs}
+              <h1>Welcome to Spotiviz!</h1>
+              <h3>Please select how far back we should analyze your music at the top.</h3>
+              <hr/>
             </div>
             <div>
-              Your most danceable song: {this.state.mostDanceableSong.name}
+              <h2>The Basics:</h2>
+              <h5>You have saved {this.state.importantInfo.numSavedSongs} songs.</h5>
+              {error ?
+              (<h5>There was an error on Spotify's end. We are able to analyze {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>) :
+              (<h5>We will be analyzing your most recent {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>)}
+              <h5>Time Frame Chosen: {this.state.timeframeChosen}</h5>
+              <br/>
+              <hr/>
             </div>
-            <div>
-              <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
-            </div>
-            <div className="topfives">
-                Your Top 5 Most Valent Songs :
-                <FormatTopFive topFives = {this.state.topFives['valence']}/>
-                Your Top 5 Most Valent Songs :
-                <FormatTopFive topFives = {this.state.topFives['tempo']}/>
-                Your Top 5 Most Valent Songs :
-                <FormatTopFive topFives = {this.state.topFives['danceability']}/>
+            <div id = "top5">
+              <h2>Top 5's</h2>
 
-
+              <div className="topfives">
+                  Valent  
+                  <FormatTopFive topFives = {this.state.topFives['valence']}/>
+                  Fastest 
+                  <FormatTopFive topFives = {this.state.topFives['tempo']}/>
+                  Dancable
+                  <FormatTopFive topFives = {this.state.topFives['danceability']}/>
+              </div>
+              <br/>
+              <hr/>
             </div>
+
             <div className="Chart-container">
+              <h2>Genre Breakdown</h2>
                 <canvas id="valence-breakdown" width="2" height="1"></canvas>
+                <canvas id="genreChart" width="400" height="200"></canvas>
+                <canvas id="radar-chart" width="2" height="1"></canvas>
+                <br/>
+                <br/>
+              <hr/>
             </div>
             <div>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
-              <h1>Content</h1>
+              <h2>Averages</h2>
+              <hr/>
             </div>
           </div>
 

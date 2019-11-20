@@ -29,8 +29,8 @@
 
 .Chart-container {
   margin: auto;
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 45%;
+  max-height: 45%;
 }
 
 div, button {
@@ -47,13 +47,26 @@ div, button {
   text-align: center;
   font-size: 24px;
   padding-top: 24px;
-  font-family: Montserrat;
 }
 .topfives {
+  text-align: left;
   align: center;
   width: 50%;
   margin: auto;
 
+}
+.topfivestext {
+  float: left;
+  text-align: left;
+  height: 150px;
+  width: 50%;
+  padding-bottom: 30px;
+}
+.topfivesimage {
+float: right;
+  height: 150px;
+  width: 50%;
+  padding-bottom: 30px;
 }
 
 
