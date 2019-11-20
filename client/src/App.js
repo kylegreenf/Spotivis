@@ -39,6 +39,7 @@ class App extends Component {
       loaded: false,
       percentLoaded: 0,
       timeframeChosen: "AllSaved", //AllSaved default, other options are last50 vs. last250 vs. favoritegenre
+      prevtimeframeChosen: "AllSaved",
     }
   }
   getHashParams() {
@@ -130,7 +131,9 @@ class App extends Component {
           }).catch(e => {
             this.setState({
                     loaded: true,
-
+                    importantInfo: {
+                      numToAnlayzeSavedSongs: this.state.apiResponses,
+                    },
                   });
                   this.RadarAnalysis();
                   this.drawCharts();
@@ -326,6 +329,10 @@ class App extends Component {
     if (this.state.loggedIn === false) {
       window.location.replace("http://localhost:8888/");
     }
+    this.setState({
+      percentLoaded: 0,
+      loaded: false,
+    });
 
     try {
       this.startAnalysis();
@@ -333,10 +340,18 @@ class App extends Component {
     catch(error) {
       console.log("eerrr");
     }
-
-
   }
 
+
+  componentDidUpdate(prevProps) {
+    if (this.state.prevtimeframeChosen !== this.state.timeframeChosen) {
+      this.setState({
+        prevtimeframeChosen: this.state.timeframeChosen
+      });
+      this.componentDidMount();
+    }
+
+  }
 
   getBucketCount(dict){
     var valArr = [];
