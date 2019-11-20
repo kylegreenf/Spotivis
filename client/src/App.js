@@ -40,6 +40,7 @@ class App extends Component {
       percentLoaded: 0,
       timeframeChosen: "AllSaved", //AllSaved default, other options are last50 vs. last250 vs. favoritegenre
       prevtimeframeChosen: "AllSaved",
+      error: false,
     }
   }
   getHashParams() {
@@ -56,7 +57,7 @@ class App extends Component {
 
   startAnalysis(){
     if (this.state.timeframeChosen === "AllSaved") {
-      this.getAllSavedTracks(2500); //Get all saved tracks
+      this.getAllSavedTracks(2000); //Get all saved tracks
     }
     else if (this.state.timeframeChosen === "last50") {
       this.getAllSavedTracks(50); //Get 50 tracks
@@ -64,8 +65,8 @@ class App extends Component {
     else if (this.state.timeframeChosen === "last250") {
       this.getAllSavedTracks(250); //get 250 saved
     }
-    else if (this.state.timeframeChosen === "last2500") {
-      this.getAllSavedTracks(2500); //get 2500 saved
+    else if (this.state.timeframeChosen === "last2000") {
+      this.getAllSavedTracks(2000); //get 2000 saved
     }
     else if (this.state.timeframeChosen === "favoritegenre") {
       this.getAllSavedTracks(-1); //analyze favoritegenre
@@ -134,6 +135,7 @@ class App extends Component {
                     importantInfo: {
                       numToAnlayzeSavedSongs: this.state.apiResponses,
                     },
+                    error: true,
                   });
                   this.RadarAnalysis();
                   this.drawCharts();
@@ -166,9 +168,9 @@ class App extends Component {
             totalSaved = 250;
           }
         }
-        else if (trackcounttofind === 2500) {
-          if (totalSaved > 2500) {
-            totalSaved = 2500;
+        else if (trackcounttofind === 2000) {
+          if (totalSaved > 2000) {
+            totalSaved = 2000;
           }
         }
 
@@ -188,7 +190,9 @@ class App extends Component {
           offset+= 50;
         }
 
-      }).catch(e => {console.log("xx");});
+      }).catch(e => { this.setState({
+                          error: true,
+                        });});
 
 
 
@@ -332,6 +336,7 @@ class App extends Component {
     this.setState({
       percentLoaded: 0,
       loaded: false,
+      error: false,
     });
 
 
@@ -339,7 +344,9 @@ class App extends Component {
       this.startAnalysis();
     }
     catch(error) {
-      console.log("eerrr");
+      this.setState({
+                         error: true,
+                       });
     }
   }
 
@@ -394,7 +401,7 @@ class App extends Component {
 
   render() {
     let {loaded} = this.state;
-
+    let {error} = this.state;
     return (
       <div className="App">
         {loaded ?
@@ -404,6 +411,9 @@ class App extends Component {
             <h1>Loading {this.state.percentLoaded}%</h1>
             <h2>Please bear with us while we analyze your listening history</h2>
             <h3>This should take no longer than 30 seconds.</h3>
+            {error ?
+            (<h1>There was an error on Spotify's end. Please try again later.</h1>) :
+            ("")}
             <br/>
             <div className="item">
 				        <div className="loader09">
@@ -427,7 +437,9 @@ class App extends Component {
             <div>
               <h2>The Basics:</h2>
               <h5>You have saved {this.state.importantInfo.numSavedSongs} songs.</h5>
-              <h5>We will be analyzing your top {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>
+              {error ?
+              (<h5>There was an error on Spotify's end. We are able to analyze {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>) :
+              (<h5>We will be analyzing your top {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>)}
               <h5>Time Frame Chosen: {this.state.timeframeChosen}</h5>
               <br/>
               <hr/>
