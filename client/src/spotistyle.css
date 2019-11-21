@@ -24,8 +24,33 @@
   /*background-color: blue;*/
 }
 
+.userinfocontainer {
+  width: 15%;
+  height: auto;
+  position: fixed;
+  left: 82%;
+  display: inline-block;
+}
+
+.username{
+  padding-right: 10px;
+}
+
+.userinfocontainer * {
+  font-size: .60em;
+  display: inline;
+  padding-left: 8px;
+}
+
+.profilepic{
+  padding-left: 0;
+  border-radius: 50%;  
+  max-width: 15%;
+  height: auto;
+}
+
 .Below{
-  margin-top: 100px;
+  margin-top: 77px;
 }
 
 .searchInput {
@@ -46,28 +71,19 @@
 
 .returnlogincontainer {
   margin-left: auto;
-  left: 90%;
+  left: 95%;
   position: fixed;
   font-size: .6em;
   display: inline-block;
-  white-space: nowrap;
-  top: 15px;
+  top: 30%;
+  
 }
 
-.userinfocontainer {
-  width: 15%;
-  height: auto;
-  position: fixed;
-  left: 75%;
-  position: fixed;
-  white-space: nowrap;
-  display: inline-block;
-}
 
-.userinfocontainer * {
-  font-size: .60em;
-  display: inline;
-  padding-left: 8px;
+
+.logout{
+  color: black;
+  font-size: .8em;
 }
 
 .logout:hover {
@@ -113,7 +129,7 @@
 }
 
 .graphdropdown:hover *{
-  background-color: #764abc;
+  background-color: #6939b8;
   color: white;
   border-style: solid;
   border-width: 2px;
@@ -123,7 +139,7 @@
 .Content {
     background-color: white;
     padding-left: 300px;
-    padding-top: 5%;
+    padding-top: 15%;
 }
 
 .Content > div {
@@ -183,19 +199,48 @@
 
 .show {display: block;}
 
-.profilepic{
-  border-radius: 50%;
-  max-width: 22%;
-  height: auto;
-}
+
 
 .menu{
   background-color: transparent;
 }
 
 .timeframe-selected{
-  color : white;
+  color : #764abc;
+  text-decoration: underline;
 }
 .timeframe-unselected{
   color : gray;
 }
+
+.timeframe{
+
+  width: 85.05%;
+  height: 30%;
+  position: fixed;
+  right: 0px;
+  padding-top: 10px;
+
+  background-image: linear-gradient(rgba(255,255,255, 1) 0%,rgba(255,255,255, 1) 60%,rgba(255,255,255, 0)100%);
+
+  /*background-image: linear-gradient(rgba(255,255,255, 1),rgba(255,255,255, 0));*/
+}
+
+.timeframe div {
+  display: block;
+}
+
+.timeframe h5{
+  padding-top: 15px;
+  font-size: .9em;
+  padding-bottom: 5px;
+}
+
+.timeframe a{
+  font-size: 1.5em;
+  padding: 25px;
+
+}
+
+
+
