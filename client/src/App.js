@@ -9,7 +9,7 @@ import './spotistyle.css';
 import TopBar from './TopBar';
 import SideNav from './SideNav';
 import FormatTopFive from './topFiveFormater';
-
+import TimeFrame from './TimeFrame';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -44,6 +44,7 @@ class App extends Component {
       loaded: false,
       percentLoaded: 0,
       timeframeChosen: "AllSaved", //AllSaved default, other options are last50 vs. last250 vs. favoritegenre
+      graphScrollTo: "",
       prevtimeframeChosen: "AllSaved",
       error: false,
     }
@@ -422,6 +423,12 @@ class App extends Component {
     })
   }
 
+  graphScroll = (graph) => {
+    this.setState({
+      graphScrollTo : graph
+    })
+  }
+
 
   render() {
     let {loaded} = this.state;
@@ -450,8 +457,9 @@ class App extends Component {
         <div className="Below">
           <TopBar username = {this.state.username} profilepic = {this.state.profilepic} timelineUpdate = {this.timelineUpdate}/>
           <div className="SideNav-Wrapper">
-            <SideNav />
+            <SideNav graphScroll = {this.graphScroll} />
           </div>
+          <TimeFrame timelineUpdate = {this.timelineUpdate} />
           <div className="Content">
             <div>
               <h1>Welcome to Spotiviz!</h1>

@@ -9,29 +9,27 @@ class TopBar extends React.Component{
     this.state = {
       timeframeChosen : ""
     };
-    this.update = this.update.bind(this);
-    this.handleClick = this.handleClick.bind(this);
 ;
   }
 
-  update = () => {
-    console.log("aaaaaa");
-    this.props.timelineUpdate("test");
-  }
+  // update = () => {
+  //   console.log("aaaaaa");
+  //   this.props.timelineUpdate("test");
+  // }
 
 
-  handleClick = (e) =>{
-    e.preventDefault();
-    if(e.target.matches('.timeframe-unselected')){
-      var selected = document.getElementsByClassName("timeframe-selected");
-      var i;
-      for(i = 0; i < selected.length; i++){
-        selected[i].className = "timeframe-unselected";
-      }
-      e.target.className = "timeframe-selected";
-      this.props.timelineUpdate(e.target.id);
-    }
-  }
+  // handleClick = (e) =>{
+  //   e.preventDefault();
+  //   if(e.target.matches('.timeframe-unselected')){
+  //     var selected = document.getElementsByClassName("timeframe-selected");
+  //     var i;
+  //     for(i = 0; i < selected.length; i++){
+  //       selected[i].className = "timeframe-unselected";
+  //     }
+  //     e.target.className = "timeframe-selected";
+  //     this.props.timelineUpdate(e.target.id);
+  //   }
+  // }
 
 
   render(){
@@ -43,13 +41,11 @@ class TopBar extends React.Component{
                 <div className="top-bar">
                     <ul className="menu" data-dropdown-menu>
                         <li className="menu-text"><div className="logoimg">xxxxxxx</div></li>
-
-                        <li className="timeframecontainer">Select which of your listening history we should analyze:
-                        </li>
                         <li className = "returnlogincontainer"><a className = "logout" href='http://localhost:8888'>Log out</a></li>
-                        <li className = "userinfocontainer"><h1>{username}</h1><img src = {profilepic} alt = "" className = "profilepic"></img></li>
+                        <li className = "userinfocontainer"><h1 className="username">{username}</h1><img src = {profilepic} alt = "" className = "profilepic"></img></li>
                     </ul>
                 </div>
+                {/*
                 <div className="top-bar2">
                   <div className="timeline">
                     <a id="AllSaved" className="timeframe-selected" onClick={this.handleClick}>All currently saved songs</a>
@@ -58,6 +54,7 @@ class TopBar extends React.Component{
                     <a id="favoritegenre" className="timeframe-unselected" onClick={this.handleClick}>Music saved from my favorite genre</a>
                   </div>
                 </div>
+                */}
             </div>
         </div>
     )

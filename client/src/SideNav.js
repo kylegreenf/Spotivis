@@ -2,7 +2,18 @@ import React from 'react'
 import './foundation.css'
 import './spotistyle.css'
 
-function SideNav() {
+class SideNav extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      graph : "",
+    }
+  }
+
+
+  render(){
+
     return(
         <div className="sidenav">
           <div className="row">
@@ -28,6 +39,7 @@ function SideNav() {
         </div>
     )
 }
+  }
 
 function searchGraphs() {
   var input, filter, ul, li, a, i;
