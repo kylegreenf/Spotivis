@@ -48,6 +48,27 @@ div, button {
   font-size: 24px;
   padding-top: 24px;
 }
+.topfives {
+  text-align: left;
+  align: center;
+  width: 50%;
+  margin: auto;
+
+}
+.topfivestext {
+  float: left;
+  text-align: left;
+  height: 150px;
+  width: 50%;
+  padding-bottom: 30px;
+}
+.topfivesimage {
+float: right;
+  height: 150px;
+  width: 50%;
+  padding-bottom: 30px;
+}
+
 
 .loader09 {
   width: 10px;

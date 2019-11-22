@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 
 import './App.css';
-//import splitByValence from './statsHelper';
+
+
 import './foundation.css';
 import './spotistyle.css';
 
 import TopBar from './TopBar';
 import SideNav from './SideNav';
+import FormatTopFive from './topFiveFormater';
 import TimeFrame from './TimeFrame';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
+var stats = require('./statsHelper');
 var Chart = require('chart.js');
 
 class App extends Component {
@@ -36,6 +39,7 @@ class App extends Component {
         name: 'Not Checked',
         albumArt: ''
       },
+      topFives: {},
       apiResponses: 0,
       loaded: false,
       percentLoaded: 0,
@@ -129,7 +133,9 @@ class App extends Component {
             if (this.state.apiResponses === this.state.importantInfo.numToAnlayzeSavedSongs) {
                     this.RadarAnalysis();
                     this.drawCharts();
+                    this.loadTopFives();
                     this.sortMostDanceable();
+              //remove loading loading screen
             }
           }).catch(e => {
             this.setState({
@@ -252,9 +258,16 @@ class App extends Component {
     });
  }
 
-  donutChart(dataArr, labelsArr, colorsArr, title) {
-    var ctx = 'donut-chart';
+  donutChart(dataArr, labelsArr, colorsArr, title, chartName="valence-breakdown") {
+    var tracks = this.state.multiTracks.tracks;
+    //chartName = "valence-breakdown";
+    var ctx = chartName;
         var options = {
+            elements: {
+                arc: {
+                    borderWidth: 1,
+                    }
+            },
             title: {
                 display: true,
                 text: title
@@ -278,6 +291,7 @@ class App extends Component {
         options: options
         });
    }
+
 
   drawCharts(){
     var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
@@ -328,6 +342,15 @@ class App extends Component {
           options: options
         });
   }
+
+  loadTopFives(){
+  var fields = ['valence','danceability','tempo','liveness','loudness','energy','duration_ms','popularity']
+  for (var f in fields){
+      var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f])
+      this.state.topFives[fields[f]] = topFiveArr;
+  }
+}
+
 
 // When page first loads, check if logged in. If not, redirect to log in.
 // Otherwise, find all the user's data.
@@ -454,15 +477,23 @@ class App extends Component {
               <hr/>
             </div>
             <div id = "top5">
-              <h2>Top 5's:</h2>
-              Your most danceable song: {this.state.mostDanceableSong.name}
+              <h2>Top 5's</h2>
+
+              <div className="topfives">
+                  Valent  
+                  <FormatTopFive topFives = {this.state.topFives['valence']}/>
+                  Fastest 
+                  <FormatTopFive topFives = {this.state.topFives['tempo']}/>
+                  Dancable
+                  <FormatTopFive topFives = {this.state.topFives['danceability']}/>
+              </div>
               <br/>
-              <img src={this.state.mostDanceableSong.albumArt} style={{ height: 150 }} alt = ""/>
               <hr/>
             </div>
+
             <div className="Chart-container">
               <h2>Genre Breakdown</h2>
-                <canvas id="donut-chart" width="2" height="1"></canvas>
+                <canvas id="valence-breakdown" width="2" height="1"></canvas>
                 <canvas id="genreChart" width="400" height="200"></canvas>
                 <canvas id="radar-chart" width="2" height="1"></canvas>
                 <br/>
