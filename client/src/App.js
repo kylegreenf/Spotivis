@@ -17,6 +17,7 @@ import placeholder from './placeholder.jpg';
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 var stats = require('./statsHelper');
+var averagesHelper = require('./averagesHelper');
 var Chart = require('chart.js');
 
 class App extends Component {
@@ -43,6 +44,7 @@ class App extends Component {
         albumArt: ''
       },
       topFives: {},
+      averagesInfo: {},
       apiResponses: 0,
       loaded: false,
       percentLoaded: 0,
@@ -79,8 +81,6 @@ class App extends Component {
     }
 
 
-
-
     spotifyApi.getMe()
       .then((response) => {
         if (!!response.display_name) {
@@ -94,6 +94,7 @@ class App extends Component {
         }
       });
   }
+
 
 // Helps getAllSavedTracks info for 50 songs sent with offset
   getAllSavedHelper(offset, tracks) {
@@ -132,8 +133,6 @@ class App extends Component {
             });
             if (this.state.apiResponses === this.state.importantInfo.numToAnlayzeSavedSongs) {
                     this.drawCharts();
-                    this.loadTopFives();
-                    this.sortMostDanceable();
               //remove loading loading screen
             }
           }).catch(e => {
@@ -145,16 +144,11 @@ class App extends Component {
                     error: true,
                   });
                   this.drawCharts();
-                  this.sortMostDanceable();
                 });
 
 
 
       })
-  }
-
-  RadarAnalysis() {
-
   }
 
 // Finds every track a user has saved
@@ -204,20 +198,7 @@ class App extends Component {
 
   }
 
-// Sort all tracks by most danceable attribute
-  sortMostDanceable() {
-    var tracks = this.state.multiTracks.tracks;
-    tracks.sort((a, b) => (a.danceability > b.danceability) ? 1 : -1);
-    this.setState({
-      mostDanceableSong: {
-          name: tracks[tracks.length-1].name,
-          albumArt: tracks[this.state.importantInfo.numToAnlayzeSavedSongs-1].album.images[0].url,
-        }
-    });
-    this.setState({
-      loaded: true,
-    })
-  }
+
 
 // Graphs and barchart tests
  barChart(dataArr, LabelsArr) {
@@ -256,7 +237,15 @@ class App extends Component {
     });
  }
 
-  donutChart(dataArr, labelsArr, colorsArr, title, chartName="valence-breakdown") {
+  donutChart() {
+    var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
+    var dataArr = this.getBucketCount(valenceCounts);
+    var labelsArr = this.getBucketLabel(valenceCounts);
+    var colorsArr = ["#412967","#764ABC","#8E6AC8","#B49CDA", "#D9CDEC"]
+    //    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
+    var title = 'Emotional break down of your saved songs'
+    var chartName = "valence-breakdown";
+
     var tracks = this.state.multiTracks.tracks;
     //chartName = "valence-breakdown";
     var ctx = chartName;
@@ -290,17 +279,24 @@ class App extends Component {
         });
    }
 
+   getAverages() {
+     this.setState()
+     var explicitinfo = averagesHelper.explicitCount(this.state.multiTracks.tracks);
+     this.setState({
+       averagesInfo: explicitinfo,
+     });
+   }
+
 
   drawCharts(){
-    var valenceCounts = this.splitByValence(this.state.multiTracks.tracks);
-    var valenceData = this.getBucketCount(valenceCounts);
-    var valenceLabels = this.getBucketLabel(valenceCounts);
-    var colors = ["#412967","#764ABC","#8E6AC8","#B49CDA", "#D9CDEC"]
-    //    var colors = ["#412967", "#4C3078","#613D9A","#764ABC","#825AC2","#8E6AC8","#9B7BCE","#B49CDA","#C0ACE0", "#D9CDEC"]
-    var title = 'Emotional break down of your saved songs'
-    this.donutChart(valenceData,valenceLabels, colors,title);
+    this.donutChart();
     this.barChart();
     this.RadarChart();
+    this.loadTopFives();
+    this.getAverages();
+    this.setState({
+      loaded: true,
+    });
   }
 
   RadarChart() {
@@ -508,7 +504,7 @@ class App extends Component {
             <div classname="averages-container">
               <a class="anchor" id="averages"></a>
               <h2>Averages</h2>
-              <FormatAverages tracks = {this.state.multiTracks.tracks}/>
+              <FormatAverages averageinfo = {this.state.averagesInfo}/>
               <img src={placeholder}></img>
               <hr/>
             </div>
