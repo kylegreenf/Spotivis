@@ -11,6 +11,8 @@ import SideNav from './SideNav';
 import FormatTopFive from './topFiveFormater';
 import TimeFrame from './TimeFrame';
 
+import placeholder from './placeholder.jpg';
+
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 var stats = require('./statsHelper');
@@ -476,7 +478,8 @@ class App extends Component {
               <br/>
               <hr/>
             </div>
-            <div id = "top5">
+            <div  className="top-5 container">
+              <a class="anchor" id="top5"></a>
               <h2>Top 5's</h2>
 
               <div className="topfives">
@@ -492,6 +495,7 @@ class App extends Component {
             </div>
 
             <div className="Chart-container">
+              <a class="anchor" id="genre"></a>
               <h2>Genre Breakdown</h2>
                 <canvas id="valence-breakdown" width="2" height="1"></canvas>
                 <canvas id="genreChart" width="400" height="200"></canvas>
@@ -500,8 +504,16 @@ class App extends Component {
                 <br/>
               <hr/>
             </div>
-            <div>
+            <div className="hipster-container">
+              <a class="anchor" id="hipster"></a>
+              <h2>Hipster Rating</h2>
+              <img src={placeholder}></img>
+              <hr/>
+            </div>
+            <div classname="averages-container">
+              <a class="anchor" id="averages"></a>
               <h2>Averages</h2>
+              <img src={placeholder}></img>
               <hr/>
             </div>
           </div>

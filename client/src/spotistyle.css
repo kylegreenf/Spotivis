@@ -3,6 +3,9 @@
   font-family: Helvetica;
 }
 
+html{
+  scroll-behavior: smooth;
+}
 
 .top-bar-container {
     position: fixed;
@@ -75,7 +78,7 @@
   position: fixed;
   font-size: .6em;
   display: inline-block;
-  top: 30%;
+  top: 20%;
   
 }
 
@@ -100,7 +103,7 @@
 .sidenav{
 
     height: 100%;
-    width: 275px;
+    width: 20%;
     background-color: #23282d;
     position: fixed;
     display: flex;
@@ -215,8 +218,8 @@
 
 .timeframe{
 
-  width: 85.05%;
-  height: 30%;
+  width: 80%;
+  height: 25%;
   position: fixed;
   right: 0px;
   padding-top: 10px;
@@ -237,9 +240,16 @@
 }
 
 .timeframe a{
-  font-size: 1.5em;
+  font-size: 1.25em;
   padding: 25px;
 
+}
+
+a.anchor{
+  display: block;
+  position: relative;
+  top: -250px;
+  visibility: hidden;
 }
 
 

@@ -41,7 +41,7 @@ class TopBar extends React.Component{
                 <div className="top-bar">
                     <ul className="menu" data-dropdown-menu>
                         <li className="menu-text"><div className="logoimg">xxxxxxx</div></li>
-                        <li className = "returnlogincontainer"><a className = "logout" href='http://localhost:8888'>Log out</a></li>
+                        <li className = "returnlogincontainer"><a className = "logout" href='http://localhost:8888'>Log Out</a></li>
                         <li className = "userinfocontainer"><h1 className="username">{username}</h1><img src = {profilepic} alt = "" className = "profilepic"></img></li>
                     </ul>
                 </div>
