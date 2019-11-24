@@ -10,6 +10,7 @@ import TopBar from './TopBar';
 import SideNav from './SideNav';
 import FormatTopFive from './topFiveFormater';
 import TimeFrame from './TimeFrame';
+import FormatAverages from './FormatAverages';
 
 import placeholder from './placeholder.jpg';
 
@@ -76,9 +77,7 @@ class App extends Component {
     else if (this.state.timeframeChosen === "last2000") {
       this.getAllSavedTracks(2000); //get 2000 saved
     }
-    else if (this.state.timeframeChosen === "favoritegenre") {
-      this.getAllSavedTracks(-1); //analyze favoritegenre
-    }
+
 
 
 
@@ -88,7 +87,6 @@ class App extends Component {
           this.setState({username: response.display_name});
         }
         if(!!response.images && response.images.length !== 0) {
-          //console.log(response);
           this.setState({profilepic: response.images[0].url});
         }
         else {
@@ -133,7 +131,6 @@ class App extends Component {
               },
             });
             if (this.state.apiResponses === this.state.importantInfo.numToAnlayzeSavedSongs) {
-                    this.RadarAnalysis();
                     this.drawCharts();
                     this.loadTopFives();
                     this.sortMostDanceable();
@@ -147,7 +144,6 @@ class App extends Component {
                     },
                     error: true,
                   });
-                  this.RadarAnalysis();
                   this.drawCharts();
                   this.sortMostDanceable();
                 });
@@ -474,7 +470,6 @@ class App extends Component {
               {error ?
               (<h5>There was an error on Spotify's end. We are able to analyze {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>) :
               (<h5>We will be analyzing your most recent {this.state.importantInfo.numToAnlayzeSavedSongs} songs.</h5>)}
-              <h5>Time Frame Chosen: {this.state.timeframeChosen}</h5>
               <br/>
               <hr/>
             </div>
@@ -483,9 +478,9 @@ class App extends Component {
               <h2>Top 5's</h2>
 
               <div className="topfives">
-                  Valent  
+                  Valent
                   <FormatTopFive topFives = {this.state.topFives['valence']}/>
-                  Fastest 
+                  Fastest
                   <FormatTopFive topFives = {this.state.topFives['tempo']}/>
                   Dancable
                   <FormatTopFive topFives = {this.state.topFives['danceability']}/>
@@ -513,6 +508,7 @@ class App extends Component {
             <div classname="averages-container">
               <a class="anchor" id="averages"></a>
               <h2>Averages</h2>
+              <FormatAverages tracks = {this.state.multiTracks.tracks}/>
               <img src={placeholder}></img>
               <hr/>
             </div>
