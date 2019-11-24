@@ -25,12 +25,12 @@ class SideNav extends React.Component {
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Artists</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Songs</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href = "#">- Albums</a></li>
-                <li className = "graphdropdown"><a href="#">Genre Breakdown</a></li>
-                <li className = "graphdropdown"><a href="#">Hipster Rating</a></li>
+                <li className = "graphdropdown"><a href="#genre">Genre Breakdown</a></li>
+                <li className = "graphdropdown"><a href="#hipster">Hipster Rating</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Average popularity</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Most popular</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Most underground</a></li>
-                <li className = "graphdropdown"><a href="#">Averages</a></li>
+                <li className = "graphdropdown"><a href="#averages">Averages</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Average danceability</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Average happiness</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Average energy</a></li>
