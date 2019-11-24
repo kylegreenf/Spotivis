@@ -47,7 +47,7 @@ html{
 
 .profilepic{
   padding-left: 0;
-  border-radius: 50%;  
+  border-radius: 50%;
   max-width: 15%;
   height: auto;
 }
@@ -79,7 +79,7 @@ html{
   font-size: .6em;
   display: inline-block;
   top: 20%;
-  
+
 }
 
 
@@ -252,5 +252,6 @@ a.anchor{
   visibility: hidden;
 }
 
-
-
+.importantStat {
+  color: #8E6AC8;
+}

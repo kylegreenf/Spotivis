@@ -20,8 +20,8 @@ class FormatAverages extends React.Component {
     if (calculatedaverage !== undefined) {
       return(
           <div className="averages">
-            <h3>{calculatedaverage.explicitcount} of your {calculatedaverage.totalLen} songs are explicit</h3>
-            <h3>{calculatedaverage.percent}% of your songs contain explicit lyrics - how naughty!</h3>
+            <h3><span className = "importantStat">{calculatedaverage.explicitcount}</span> of your <span className = "importantStat">{calculatedaverage.totalLen}</span> songs are explicit</h3>
+            <h3><span className = "importantStat">{calculatedaverage.percent}</span>% of your songs contain explicit lyrics - how naughty!</h3>
           </div>
       )
     }
