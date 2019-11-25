@@ -10,14 +10,15 @@ function FormatTopFive(topFives){
 
 
     return(
-      <div>
+      <div className = "topfivesobj">
         <div className = "topfivestext">
             <ol id="topFiveList">
-                <li><a className = "topFiveItem" id = '0'>{topFives[0].name}</a></li>
-                <li><a className = "topFiveItem" id = '1'>{topFives[1].name}</a></li>
-                <li><a className = "topFiveItem" >{topFives[2].name}</a></li>
-                <li><a className = "topFiveItem" >{topFives[3].name}</a></li>
-                <li><a className = "topFiveItem" >{topFives[4].name}</a></li>
+
+                <li><button className="topfivebutton button1">{topFives[0].name}</button></li>
+                <li><button className="topfivebutton button2">{topFives[1].name}</button></li>
+                <li><button className="topfivebutton button3">{topFives[2].name}</button></li>
+                <li><button className="topfivebutton button4">{topFives[3].name}</button></li>
+                <li><button className="topfivebutton button5">{topFives[4].name}</button></li>
             </ol>
         </div>
 
