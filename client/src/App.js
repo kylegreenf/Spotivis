@@ -291,7 +291,7 @@ class App extends Component {
   drawCharts(){
     this.donutChart();
     this.barChart();
-    this.RadarChart();
+    averagesHelper.RadarChart(this.state.multiTracks.tracks);
     this.loadTopFives();
     this.getAverages();
     this.setState({
@@ -299,51 +299,15 @@ class App extends Component {
     });
   }
 
-  RadarChart() {
-    var ctx = 'radar-chart';
-        var options = {
-            title: {
-                display: true,
-                text: "Diversity Analysis"
-            },
-            legend:{
-                display:true
-            }
-        };
-    var options = {
-        scale: {
-            angleLines: {
-                display: true
-            },
-            ticks: {
-                suggestedMin: 0,
-                suggestedMax: 290
-            }
-        }
-    };
 
 
-        var myBarChart = new Chart(ctx, {
-          type: 'radar',
-          data: {
-            labels: ['Danceability', 'Energy', 'Loudness', 'Happiness', 'Acousticness'],
-            datasets: [{
-                borderColor: ["#764abc"],
-                backgroundColor: ["#361a9c"],
-                data: [250, 100, 40, 190, 165],
-            }]
-          },
-          options: options
-        });
+  loadTopFives() {
+    var fields = ['valence','danceability','tempo','liveness','loudness','energy','duration_ms','popularity']
+    for (var f in fields){
+        var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f])
+        this.state.topFives[fields[f]] = topFiveArr;
+    }
   }
-
-  loadTopFives(){
-  var fields = ['valence','danceability','tempo','liveness','loudness','energy','duration_ms','popularity']
-  for (var f in fields){
-      var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f])
-      this.state.topFives[fields[f]] = topFiveArr;
-  }
-}
 
 
 // When page first loads, check if logged in. If not, redirect to log in.
@@ -358,17 +322,15 @@ class App extends Component {
       error: false,
     });
 
-
     try {
       this.startAnalysis();
     }
     catch(error) {
       this.setState({
-                         error: true,
-                       });
+        error: true,
+      });
     }
   }
-
 
   componentDidUpdate(prevProps) {
     if (this.state.prevtimeframeChosen !== this.state.timeframeChosen) {
@@ -390,9 +352,6 @@ class App extends Component {
 
   getBucketLabel(dict){
     var valArr = ["Negative emotions", "Leaning negative", "Neutral", "Leaning positive", "Very positive emotions"];
-    /*for (var key in dict){
-        valArr.push(key.toString() + "-" +(parseInt(key)+20))
-    }*/
     return valArr;
   }
 
@@ -490,7 +449,6 @@ class App extends Component {
               <h2>Genre Breakdown</h2>
                 <canvas id="valence-breakdown" width="2" height="1"></canvas>
                 <canvas id="genreChart" width="400" height="200"></canvas>
-                <canvas id="radar-chart" width="2" height="1"></canvas>
                 <br/>
                 <br/>
               <hr/>
@@ -505,6 +463,7 @@ class App extends Component {
               <a class="anchor" id="averages"></a>
               <h2>Averages</h2>
               <FormatAverages averageinfo = {this.state.averagesInfo}/>
+              <canvas id="radar-chart" width="3" height="2"></canvas>
               <img src={placeholder}></img>
               <hr/>
             </div>

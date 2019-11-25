@@ -1,7 +1,9 @@
 import React from 'react'
 import './foundation.css'
 import './spotistyle.css'
+var Chart = require('chart.js');
 var calculatedaverage;
+
 
 class FormatAverages extends React.Component {
 
