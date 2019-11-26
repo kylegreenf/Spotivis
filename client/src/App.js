@@ -8,7 +8,7 @@ import './spotistyle.css';
 
 import TopBar from './TopBar';
 import SideNav from './SideNav';
-import FormatTopFive from './topFiveFormater';
+import TopFiveFormater from './TopFiveFormater';
 import TimeFrame from './TimeFrame';
 import FormatAverages from './FormatAverages';
 
@@ -434,11 +434,11 @@ class App extends Component {
 
               <div className="topfives">
                   Valent
-                  <FormatTopFive topFives = {this.state.topFives['valence']}/>
+                  <TopFiveFormater topFives = {this.state.topFives['valence']}/>
                   Fastest
-                  <FormatTopFive topFives = {this.state.topFives['tempo']}/>
+                  <TopFiveFormater topFives = {this.state.topFives['tempo']}/>
                   Dancable
-                  <FormatTopFive topFives = {this.state.topFives['danceability']}/>
+                  <TopFiveFormater topFives = {this.state.topFives['danceability']}/>
               </div>
               <br/>
               <hr/>
