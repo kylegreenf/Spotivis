@@ -22,9 +22,6 @@ class SideNav extends React.Component {
               <ul id="myMenu">
                 <li className = "graphdropdown"><a className = "sideNavParent" href="#">The Basics</a></li>
                 <li className = "graphdropdown"><a className = "sideNavParent" href="#top5">Top 5</a></li>
-                <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Artists</a></li>
-                <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Songs</a></li>
-                <li className = "graphdropdown"><a className = "sideNavChild" href = "#">- Albums</a></li>
                 <li className = "graphdropdown"><a href="#genre">Genre Breakdown</a></li>
                 <li className = "graphdropdown"><a href="#hipster">Hipster Rating</a></li>
                 <li className = "graphdropdown"><a className = "sideNavChild" href="#">- Average popularity</a></li>
