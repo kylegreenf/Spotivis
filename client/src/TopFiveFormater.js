@@ -7,11 +7,11 @@ class TopFiveFormater extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-        selectedItem : 0 
+        selectedItem : 0
     };
-    ;
+    
   }
-  
+
   render(){
     const { topFives } = this.props
     const { field } = this.props
@@ -36,7 +36,7 @@ class TopFiveFormater extends React.Component{
         this.state.selectedItem = topFives[selectedIdx]
         var buttonNames = ["topfivebutton tfbutton","topfivebutton tfbutton","topfivebutton tfbutton","topfivebutton tfbutton","topfivebutton tfbutton"]
         buttonNames[selectedIdx] = "tfbuttonselected"
-        
+
         return(
 
           <div className = "topfivesobj">
@@ -50,11 +50,11 @@ class TopFiveFormater extends React.Component{
                     <li><button className={buttonNames[4]} onClick={() =>{setSelected(field,4)}}>{topFives[4].name}</button></li>
                 </ol>
             </div>
-            
+
             <div className = "topfivesimage">
                 Artist: {this.state.selectedItem.artists[0].name}
                 <br></br>
-                <img src={this.state.selectedItem.album.images[0].url} style={{ height: 150 }} alt = ""/>                
+                <img src={this.state.selectedItem.album.images[0].url} style={{ height: 150 }} alt = ""/>
             </div>
           </div>
 
@@ -72,7 +72,7 @@ class TopFiveFormater extends React.Component{
 
 export default TopFiveFormater
 /*
-      
+
 
         <img src={selectedItem.album.images[0].url} style={{ height: 150 }} alt = ""/>
 
@@ -95,4 +95,4 @@ export default TopFiveFormater
                 </div>
       )
   }
-    */  
+    */

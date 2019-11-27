@@ -394,8 +394,8 @@ class App extends Component {
     var curSelected = this.state.selectedTopFives
     console.log()
     curSelected[field] = idx
-    
-    
+
+
     this.setState({
         selectedTopFive : curSelected
     })
@@ -452,9 +452,9 @@ class App extends Component {
               <h2>Top 5's</h2>
 
               <div className="topfives">
-                  Most Valent Songs
+                  Most Happy Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'valence'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Least Valent Songs
+                  Most Somber Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'unvalence'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
                   Lastest Tempo Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'tempo'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
@@ -489,16 +489,10 @@ class App extends Component {
 
             <div className="Chart-container">
               <a class="anchor" id="genre"></a>
-              <h2>Genre Breakdown</h2>
+              <h2>Track Breakdown</h2>
                 <canvas id="valence-breakdown" width="2" height="1"></canvas>
                 <br/>
                 <br/>
-              <hr/>
-            </div>
-            <div className="hipster-container">
-              <a class="anchor" id="hipster"></a>
-              <h2>Hipster Rating</h2>
-              <img src={placeholder}></img>
               <hr/>
             </div>
             <div classname="averages-container">
@@ -506,7 +500,6 @@ class App extends Component {
               <h2>Averages</h2>
               <FormatAverages averageinfo = {this.state.averagesInfo}/>
               <canvas id="radar-chart" width="3" height="2"></canvas>
-              <img src={placeholder}></img>
               <hr/>
             </div>
           </div>
