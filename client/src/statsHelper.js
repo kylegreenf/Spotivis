@@ -41,6 +41,16 @@ module.exports = {
         names.push(topFive[t])
     }
     return names
+  },
+
+getBotFive(tracks,field){
+    tracks.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
+    var topFive = tracks.slice(0,5);
+    var names = [];
+    for (var t in topFive){
+        names.push(topFive[t])
+    }
+    return names
   }
 /*
                 

@@ -44,6 +44,7 @@ class App extends Component {
         albumArt: ''
       },
       topFives: {},
+      selectedTopFives: {},
       averagesInfo: {},
       apiResponses: 0,
       loaded: false,
@@ -305,7 +306,15 @@ class App extends Component {
     var fields = ['valence','danceability','tempo','liveness','loudness','energy','duration_ms','popularity']
     for (var f in fields){
         var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f])
-        this.state.topFives[fields[f]] = topFiveArr;
+        var botFiveArr = stats.getBotFive(this.state.multiTracks.tracks,fields[f])
+        var curTopFive= this.state.topFives
+        var curSelectedTopFive = this.state.selectedTopFives
+        curTopFive[fields[f]] = topFiveArr
+        curSelectedTopFive[fields[f]] = 0
+        curTopFive["un"+fields[f]] = botFiveArr
+        curSelectedTopFive["un"+fields[f]] = 0
+        this.setState({topFives:curTopFive});
+        this.setState({selectedTopFives:curSelectedTopFive});
     }
   }
 
@@ -381,6 +390,16 @@ class App extends Component {
       graphScrollTo : graph
     })
   }
+  setSelected = (field,idx) => {
+    var curSelected = this.state.selectedTopFives
+    console.log()
+    curSelected[field] = idx
+    
+    
+    this.setState({
+        selectedTopFive : curSelected
+    })
+  }
 
 
   render() {
@@ -433,12 +452,36 @@ class App extends Component {
               <h2>Top 5's</h2>
 
               <div className="topfives">
-                  Valent
-                  <TopFiveFormater topFives = {this.state.topFives['valence']}/>
-                  Fastest
-                  <TopFiveFormater topFives = {this.state.topFives['tempo']}/>
-                  Dancable
-                  <TopFiveFormater topFives = {this.state.topFives['danceability']}/>
+                  Top 5 Most Valent Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'valence'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Least Valent Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'unvalence'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Fastest Tempo Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'tempo'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Slowest Tempo Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'untempo'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Most Dancable Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'danceability'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Least Dancable Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'undanceability'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Loudest Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'loudness'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Quietest Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'unloudness'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Most Energetic Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'energy'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Least Energetic Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'unenergy'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Longest Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'duration_ms'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Shortest Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'unduration_ms'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Most Popular Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'popularity'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+                  Top 5 Least Popular Songs
+                  <TopFiveFormater topFives = {this.state.topFives} field = {'unpopularity'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
+
+
               </div>
               <br/>
               <hr/>
@@ -448,7 +491,6 @@ class App extends Component {
               <a class="anchor" id="genre"></a>
               <h2>Genre Breakdown</h2>
                 <canvas id="valence-breakdown" width="2" height="1"></canvas>
-                <canvas id="genreChart" width="400" height="200"></canvas>
                 <br/>
                 <br/>
               <hr/>

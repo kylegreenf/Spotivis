@@ -64,14 +64,17 @@ overflow: auto;
   text-align: left;
   width: 50%;
 }
+
 .topfivesimage {
 float: right;
+text-align: center;
 
 
 }
 
 .topfivebutton {
   background-color: #4CAF50; /* Green */
+  border-radius: 6px;
   border: none;
   color: white;
   padding: 1px 32px;
@@ -85,59 +88,23 @@ float: right;
   cursor: pointer;
 }
 
-.button1 {
-  background-color: white; 
-  color: black; 
-  border: 2px solid #4CAF50;
-}
-
-.button1:hover {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.button2 {
-  background-color: white; 
-  color: black; 
-  border: 2px solid #008CBA;
-}
-
-.button2:hover {
-  background-color: #008CBA;
-  color: white;
-}
-
-.button3 {
-  background-color: white; 
-  color: black; 
-  border: 2px solid #f44336;
-}
-
-.button3:hover {
-  background-color: #f44336;
-  color: white;
-}
-
-.button4 {
+.tfbutton {
   background-color: white;
   color: black;
   border: 2px solid #764ABC;
 }
 
-.button4:hover {
-    background-color: #764ABC;  
-    color: white;
-}
-
-.button5 {
-  background-color: white;
-  color: black;
-  border: 2px solid #555555;
-}
-
-.button5:hover {
+.tfbutton:hover {
   background-color: #555555;
   color: white;
+}
+
+
+.tfbuttonselected {
+  border-radius: 6px;
+    background-color: #764ABC;  
+    border: 5px solid #764ABC;
+    color: white;
 }
 
 

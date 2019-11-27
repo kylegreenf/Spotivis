@@ -14,25 +14,28 @@ class TopFiveFormater extends React.Component{
   
   render(){
     const { topFives } = this.props
-    if(topFives!== undefined){
+    const { field } = this.props
+    const { setSelected } = this.props
+    const { selected } = this.props
 
-    }
-    var css = this.FormatTopFive(topFives)
+    var css = this.FormatTopFive(topFives, field, setSelected, selected)
     return(css)
   }
 
-  FormatTopFive(topFives){
+  FormatTopFive(topFives, field, setSelected, selected){
 
     if(topFives === undefined){
 
         return <div></div>
     }
-      console.log(topFives)
+      var topFives = topFives[field]
+
 
       if(topFives !== undefined){
-        
-        this.state.selectedItem = topFives[0]
-        console.log(this.state.selectedItem)
+        var selectedIdx = selected[field]
+        this.state.selectedItem = topFives[selectedIdx]
+        var buttonNames = ["topfivebutton tfbutton","topfivebutton tfbutton","topfivebutton tfbutton","topfivebutton tfbutton","topfivebutton tfbutton"]
+        buttonNames[selectedIdx] = "tfbuttonselected"
         
         return(
 
@@ -40,16 +43,18 @@ class TopFiveFormater extends React.Component{
             <div className = "topfivestext">
                 <ol id="topFiveList">
 
-                    <li><button className="topfivebutton button1" onClick={() =>{this.selectItem(topFives[0])}}>{topFives[0].name}</button></li>
-                    <li><button className="topfivebutton button2" onClick={() =>{this.selectItem(topFives[1]);}}>{topFives[1].name}</button></li>
-                    <li><button className="topfivebutton button3">{topFives[2].name}</button></li>
-                    <li><button className="topfivebutton button4">{topFives[3].name}</button></li>
-                    <li><button className="topfivebutton button5">{topFives[4].name}</button></li>
+                    <li><button className={buttonNames[0]} onClick={() =>{setSelected(field,0)}}>{topFives[0].name}</button></li>
+                    <li><button className={buttonNames[1]} onClick={() =>{setSelected(field,1)}}>{topFives[1].name}</button></li>
+                    <li><button className={buttonNames[2]} onClick={() =>{setSelected(field,2)}}>{topFives[2].name}</button></li>
+                    <li><button className={buttonNames[3]} onClick={() =>{setSelected(field,3)}}>{topFives[3].name}</button></li>
+                    <li><button className={buttonNames[4]} onClick={() =>{setSelected(field,4)}}>{topFives[4].name}</button></li>
                 </ol>
             </div>
-
+            
             <div className = "topfivesimage">
-                <img src={this.state.selectedItem.album.images[0].url} style={{ height: 150 }} alt = ""/>
+                Artist: {this.state.selectedItem.artists[0].name}
+                <br></br>
+                <img src={this.state.selectedItem.album.images[0].url} style={{ height: 150 }} alt = ""/>                
             </div>
           </div>
 
@@ -60,10 +65,6 @@ class TopFiveFormater extends React.Component{
         }
     }
 
-    selectItem(newItem){
-        console.log(newItem)
-        this.state.selectedItem = newItem
-    }
 }
 
 
