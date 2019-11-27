@@ -452,33 +452,33 @@ class App extends Component {
               <h2>Top 5's</h2>
 
               <div className="topfives">
-                  Top 5 Most Valent Songs
+                  Most Valent Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'valence'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Least Valent Songs
+                  Least Valent Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'unvalence'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Fastest Tempo Songs
+                  Lastest Tempo Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'tempo'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Slowest Tempo Songs
+                  Slowest Tempo Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'untempo'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Most Dancable Songs
+                  Most Dancable Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'danceability'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Least Dancable Songs
+                  Least Dancable Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'undanceability'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Loudest Songs
+                  Loudest Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'loudness'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Quietest Songs
+                  Quietest Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'unloudness'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Most Energetic Songs
+                  Most Energetic Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'energy'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Least Energetic Songs
+                  Least Energetic Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'unenergy'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Longest Songs
+                  Longest Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'duration_ms'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Shortest Songs
+                  Shortest Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'unduration_ms'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Most Popular Songs
+                  Most Popular Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'popularity'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
-                  Top 5 Least Popular Songs
+                  Least Popular Songs
                   <TopFiveFormater topFives = {this.state.topFives} field = {'unpopularity'} setSelected = {this.setSelected} selected = {this.state.selectedTopFives}/>
 
 

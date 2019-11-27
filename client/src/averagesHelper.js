@@ -12,7 +12,7 @@ module.exports = {
           explicitcount++;
         }
     }
-    var percent = (totalLen/explicitcount).toFixed(0);
+    var percent = ((explicitcount/totalLen)*100).toFixed(0);
     var ratio = {explicitcount, totalLen, percent};
     return ratio;
   },
