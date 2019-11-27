@@ -86,6 +86,7 @@ text-align: center;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   cursor: pointer;
+  width: 90%;
 }
 
 .tfbutton {
@@ -102,9 +103,10 @@ text-align: center;
 
 .tfbuttonselected {
   border-radius: 6px;
-    background-color: #764ABC;  
-    border: 5px solid #764ABC;
-    color: white;
+  background-color: #764ABC;  
+  border: 5px solid #764ABC;
+  width: 90%;
+  color: white;
 }
 
 
