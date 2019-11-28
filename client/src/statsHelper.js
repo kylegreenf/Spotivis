@@ -1,11 +1,11 @@
 
 module.exports = {
-  
+
   getBucketCount(dict){
     var valArr = [];
     for (var key in dict){
         valArr.push(dict[key])
-    }      
+    }
     return valArr;
   },
 
@@ -13,7 +13,7 @@ module.exports = {
     var valArr = [];
     for (var key in dict){
         valArr.push(key.toString() + "-" +(parseInt(key)+10))
-    }      
+    }
     return valArr;
   },
 
@@ -25,7 +25,7 @@ module.exports = {
         val = (Math.floor(val*10))*10
 
         if(val in countDict){
-            countDict[val] += 1        
+            countDict[val] += 1
         }else{
             countDict[val] = 1
         }
@@ -33,12 +33,14 @@ module.exports = {
     return countDict
   },
 
-  getTopFive(tracks,field){
+  getTopFive(tracks,field, spotifyApi){
     tracks.sort((a, b) => (a[field] < b[field]) ? 1 : -1);
     var topFive = tracks.slice(0,5);
     var names = [];
+    var ids = [];
     for (var t in topFive){
-        names.push(topFive[t])
+        names.push(topFive[t]);
+        ids.push(topFive[t].id);
     }
     return names
   },
@@ -47,12 +49,13 @@ getBotFive(tracks,field){
     tracks.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
     var topFive = tracks.slice(0,5);
     var names = [];
+    var ids = [];
     for (var t in topFive){
-        names.push(topFive[t])
+        names.push(topFive[t]);
     }
     return names
   }
 /*
-                
+
 */
 };

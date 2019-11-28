@@ -290,6 +290,7 @@ class App extends Component {
 
 
   drawCharts(){
+
     this.donutChart();
     this.barChart();
     averagesHelper.RadarChart(this.state.multiTracks.tracks);
@@ -298,6 +299,7 @@ class App extends Component {
     this.setState({
       loaded: true,
     });
+
   }
 
 
@@ -305,16 +307,41 @@ class App extends Component {
   loadTopFives() {
     var fields = ['valence','danceability','tempo','liveness','loudness','energy','duration_ms','popularity']
     for (var f in fields){
-        var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f])
-        var botFiveArr = stats.getBotFive(this.state.multiTracks.tracks,fields[f])
-        var curTopFive= this.state.topFives
-        var curSelectedTopFive = this.state.selectedTopFives
-        curTopFive[fields[f]] = topFiveArr
-        curSelectedTopFive[fields[f]] = 0
-        curTopFive["un"+fields[f]] = botFiveArr
-        curSelectedTopFive["un"+fields[f]] = 0
-        this.setState({topFives:curTopFive});
-        this.setState({selectedTopFives:curSelectedTopFive});
+        var topIds = [];
+        var botIds = [];
+
+        var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f], spotifyApi);
+        var botFiveArr = stats.getBotFive(this.state.multiTracks.tracks,fields[f]);
+
+        for (var t in topFiveArr){
+            topIds.push(topFiveArr[t].id);
+        }
+        for (var t in botFiveArr){
+            botIds.push(topFiveArr[t].id);
+        }
+
+        spotifyApi.getRecommendations({
+          seed_tracks: [topIds]}).then((response) => {
+            //Set state for response.tracks here.
+            //This essentially only finishes WHEN A RESPONSE HAS RETURNED!
+            //If you do outside the 'then', the promise will be empty and no data returned.
+            console.log(response);
+            //Now we can wait for a response and then get recommendations for bottom 5
+            spotifyApi.getRecommendations({
+              seed_tracks: [botIds]}).then((response) => {
+                //Set state for response.tracks here.
+                var curTopFive= this.state.topFives;
+                var curSelectedTopFive = this.state.selectedTopFives
+                curTopFive[fields[f]] = topFiveArr
+                curSelectedTopFive[fields[f]] = 0
+                curTopFive["un"+fields[f]] = botFiveArr
+                curSelectedTopFive["un"+fields[f]] = 0
+                this.setState({topFives:curTopFive});
+                this.setState({selectedTopFives:curSelectedTopFive});
+              });
+          });
+
+
     }
   }
 
@@ -392,7 +419,6 @@ class App extends Component {
   }
   setSelected = (field,idx) => {
     var curSelected = this.state.selectedTopFives
-    console.log()
     curSelected[field] = idx
 
 
