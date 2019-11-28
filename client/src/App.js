@@ -306,9 +306,11 @@ class App extends Component {
 
   loadTopFives() {
     var fields = ['valence','danceability','tempo','liveness','loudness','energy','duration_ms','popularity']
+
     for (var f in fields){
         var topIds = [];
         var botIds = [];
+        var recentry = [];
 
         var topFiveArr = stats.getTopFive(this.state.multiTracks.tracks,fields[f], spotifyApi);
         var botFiveArr = stats.getBotFive(this.state.multiTracks.tracks,fields[f]);
@@ -325,23 +327,25 @@ class App extends Component {
             //Set state for response.tracks here.
             //This essentially only finishes WHEN A RESPONSE HAS RETURNED!
             //If you do outside the 'then', the promise will be empty and no data returned.
-            console.log(response);
-            //Now we can wait for a response and then get recommendations for bottom 5
+            recentry.push(response.tracks[0]);
             spotifyApi.getRecommendations({
               seed_tracks: [botIds]}).then((response) => {
                 //Set state for response.tracks here.
-                var curTopFive= this.state.topFives;
-                var curSelectedTopFive = this.state.selectedTopFives
-                curTopFive[fields[f]] = topFiveArr
-                curSelectedTopFive[fields[f]] = 0
-                curTopFive["un"+fields[f]] = botFiveArr
-                curSelectedTopFive["un"+fields[f]] = 0
-                this.setState({topFives:curTopFive});
-                this.setState({selectedTopFives:curSelectedTopFive});
+                //This essentially only finishes WHEN A RESPONSE HAS RETURNED!
+                //If you do outside the 'then', the promise will be empty and no data returned.
+                recentry.push(response.tracks[0]);
+                console.log(recentry);
               });
           });
 
-
+        var curTopFive= this.state.topFives;
+        var curSelectedTopFive = this.state.selectedTopFives
+        curTopFive[fields[f]] = topFiveArr
+        curSelectedTopFive[fields[f]] = 0
+        curTopFive["un"+fields[f]] = botFiveArr
+        curSelectedTopFive["un"+fields[f]] = 0
+        this.setState({topFives:curTopFive});
+        this.setState({selectedTopFives:curSelectedTopFive});
     }
   }
 
