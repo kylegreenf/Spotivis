@@ -3,7 +3,9 @@ Spotify Habit Visualization
 
 Navigate to http://lookatmyspotify.herokuapp.com
 
-Note: if after signing into spotify you are brought to an https page, simply remove the 's' from 'https' to continue
+Notes: 
+- If after signing into spotify you are brought to an https page, simply remove the 's' from 'https' to continue
+- If logging out does not work, click 'logout', clear your cache/cookies, then try to log back in
 
 
 ## Manual Startup
