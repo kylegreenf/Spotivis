@@ -11,6 +11,7 @@ import SideNav from './SideNav';
 import TopFiveFormater from './TopFiveFormater';
 import TimeFrame from './TimeFrame';
 import FormatAverages from './FormatAverages';
+import Recommendations from './Recommendations';
 
 import placeholder from './placeholder.jpg';
 
@@ -52,6 +53,7 @@ class App extends Component {
       timeframeChosen: "AllSaved", //AllSaved default, other options are last50 vs. last250 vs. favoritegenre
       graphScrollTo: "",
       prevtimeframeChosen: "AllSaved",
+      recommendations: {},
       error: false,
     }
   }
@@ -60,11 +62,13 @@ class App extends Component {
     var e, r = /([^&;=]+)=?([^&;]*)/g,
         q = window.location.hash.substring(1);
     e = r.exec(q)
+    console.log(e);
     while (e) {
        hashParams[e[1]] = decodeURIComponent(e[2]);
        e = r.exec(q);
     }
     return hashParams;
+
   }
 
   startAnalysis(){
@@ -201,6 +205,8 @@ class App extends Component {
 
 
 
+
+
 // Graphs and barchart tests
  barChart(dataArr, LabelsArr) {
     var ctx = 'genreChart';
@@ -334,7 +340,10 @@ class App extends Component {
                 //This essentially only finishes WHEN A RESPONSE HAS RETURNED!
                 //If you do outside the 'then', the promise will be empty and no data returned.
                 recentry.push(response.tracks[0]);
-                console.log(recentry);
+                this.setState({
+                  recommendations:response.tracks
+                });
+                //console.log(response.tracks[1].name);
               });
           });
 
@@ -408,6 +417,11 @@ class App extends Component {
         }
     }
     return countDict
+  }
+
+  addSavedSong = (song) => {
+    console.log("added song");
+    spotifyApi.addToMySavedTracks([song.id])
   }
 
   timelineUpdate = (time) => {
@@ -531,6 +545,11 @@ class App extends Component {
               <FormatAverages averageinfo = {this.state.averagesInfo}/>
               <canvas id="radar-chart" width="3" height="2"></canvas>
               <hr/>
+            </div>
+            <div className="reccomendations-container">
+              <a class="anchor" id="recommendations"></a>
+              <h2>Recommendations</h2>
+              <Recommendations recommendations = {this.state.recommendations} addSavedSong = {this.addSavedSong}/>
             </div>
           </div>
 

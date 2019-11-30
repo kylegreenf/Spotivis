@@ -24,6 +24,7 @@ class SideNav extends React.Component {
                 <li className = "graphdropdown"><a className = "sideNavParent" href="#top5">Top 5</a></li>
                 <li className = "graphdropdown"><a href="#genre">Track Breakdown</a></li>
                 <li className = "graphdropdown"><a href="#averages">Averages</a></li>
+                <li className = "graphdropdown"><a href="#recommendations">Recommendations</a></li>
               </ul>
             </div>
         </div>
