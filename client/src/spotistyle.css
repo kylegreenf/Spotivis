@@ -255,3 +255,29 @@ a.anchor{
 .importantStat {
   color: #8E6AC8;
 }
+
+
+.rec{
+  float: left;
+  width: 33%;
+  padding: 10px;
+}
+
+.rec-row::after{
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.rec img{
+  max-width: 50%;
+  height: auto;
+}
+
+.rec h1{
+  font-size: 1em;
+  padding-top: 10px;
+}
+.rec-title{
+  padding-bottom: 20px;
+}
