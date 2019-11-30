@@ -11,7 +11,7 @@ Spotify Habit Visualization
 - Run the Server `node app.js`
 
 ### 2)  Start Client
-- Navigate to the auth-server directory `cd ../src/client`
+- Navigate to the auth-server directory `cd ../client/src`
 - Install the dependencies `npm install`
 - Run the Server `npm start`
 
