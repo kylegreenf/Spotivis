@@ -1,9 +1,10 @@
 # Spotivis
 Spotify Habit Visualization
 
+Navigate to http://lookatmyspotify.herokuapp.com
 
-## Getting Statrted
 
+## Manual Startup
 
 ### 1)  Start Auth Server
 - Navigate to the auth-server directory `cd auth-server`
