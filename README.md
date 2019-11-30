@@ -5,17 +5,18 @@ Spotify Habit Visualization
 ## Getting Statrted
 
 
-### 2)  Start Auth Server
+### 1)  Start Auth Server
 - Navigate to the auth-server directory `cd auth-server`
 - Install the dependencies `npm install`
-- Paste in the redirect uri, client id, and client secret you copied in step 1
 - Run the Server `node app.js`
 
-### 3)  Start Client
-- Navigate to the auth-server directory `cd client`
+### 2)  Start Client
+- Navigate to the auth-server directory `cd ../src/client`
 - Install the dependencies `npm install`
 - Run the Server `npm start`
 
-### 4)  Use the App
-- Make sure you have a song playing (or paused) on a Spotify app
+### 3)  Use the App
 - Visit http://localhost:3000
+
+### 4) Sign In
+- An account has been pre-made to test with: User `feingon@wwu.edu` Password: `Spotiviz!!123`
